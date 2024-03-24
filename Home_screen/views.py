@@ -98,3 +98,10 @@ class MeterDataList(APIView):
         meter_data = Meter_data.objects.all()
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
+
+def chart_view(request):
+    meter_data = Meter_data.objects.all()
+    data = [{'labels': [data.timestamp for data in meter_data],
+             'values': [data.value for data in meter_data],
+             'type': 'pie'}]
+    return render(request, 'chart.html', {'chart_data': data})
