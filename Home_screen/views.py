@@ -82,7 +82,7 @@ class AddressView(CreateView):
 def ttn_webhook(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
+        #print(data)
 
 
         timestamp_str = data.get('received_at')
@@ -96,14 +96,11 @@ def ttn_webhook(request):
             return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
 
 
-
-
-
-
-
-
         #timestamp = data.get("timestamp")
         text = data.get("uplink_message",{}.get('decoded_payload',{}).get('text'))
+
+        print("Text:",text)
+        print("Timestamp:",timestamp_str)
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
