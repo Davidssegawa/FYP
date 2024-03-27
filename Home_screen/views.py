@@ -81,9 +81,9 @@ class AddressView(CreateView):
 def ttn_webhook(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        #print(data)
+        print(data)
 
-        timestamp = data.get("timestamp")
+'''        timestamp = data.get("timestamp")
         text = data.get("text")
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
@@ -104,4 +104,4 @@ def chart_view(request):
     data = [{'labels': [data.timestamp for data in meter_data],
              'values': [data.text for data in meter_data],
              'type': 'pie'}]
-    return render(request, 'templates/sections/Statistics.html', {'chart_data': data})
+    return render(request, 'templates/sections/Statistics.html', {'chart_data': data})'''
