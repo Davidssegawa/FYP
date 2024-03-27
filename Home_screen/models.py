@@ -18,6 +18,6 @@ class Meter_Address(models.Model):
 
 class Meter_data(models.Model):
     timestamp = models.DateTimeField(blank=True,null=True)     
-    text = models.FloatField(blank=True,null=True)
+    text = models.CharField(blank=True,null=True)
 
 

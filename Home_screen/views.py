@@ -100,7 +100,7 @@ def ttn_webhook(request):
         text = data.get("uplink_message",{}.get('decoded_payload',{}).get('text'))
 
         print("Text:",text)
-        print("Timestamp:",timestamp_str)
+        print("Timestamp:",timestamp)
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
