@@ -97,7 +97,7 @@ def ttn_webhook(request):
 
 
         #timestamp = data.get("timestamp")
-        text = data.get("uplink_message",{}.get('decoded_payload',{}).get('text'))
+        text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
 
         print("Text:",text)
         print("Timestamp:",timestamp)
