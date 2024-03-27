@@ -81,11 +81,13 @@ class AddressView(CreateView):
 def ttn_webhook(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
+        
 
         timestamp = data.get("timestamp")
         text = data.get("text")
+        print(timestamp)
 
+        
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
 
