@@ -85,7 +85,7 @@ def ttn_webhook(request):
         print(data)
 
 
-        timestamp_str = data.get('timestamp')
+        timestamp_str = data.get('received_at')
         if not timestamp_str:
             return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
         
@@ -103,7 +103,7 @@ def ttn_webhook(request):
 
 
         #timestamp = data.get("timestamp")
-        text = data.get("text")
+        text = data.get("uplink_message"{}.get('decoded_payload'{}).get('text'))
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
