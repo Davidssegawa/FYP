@@ -1,4 +1,5 @@
 
+from datetime import datetime
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -83,7 +84,25 @@ def ttn_webhook(request):
         data = json.loads(request.body.decode('utf-8'))
         print(data)
 
-        timestamp = data.get("timestamp")
+
+        timestamp_str = data.get('timestamp')
+        if not timestamp_str:
+            return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
+        
+        # Parse the timestamp string into a datetime object
+        try:
+            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
+        except ValueError:
+            return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
+
+
+
+
+
+
+
+
+        #timestamp = data.get("timestamp")
         text = data.get("text")
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
