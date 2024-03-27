@@ -18,6 +18,6 @@ class Meter_Address(models.Model):
 
 class Meter_data(models.Model):
     timestamp = models.DateTimeField()     
-    Water_consumption = models.FloatField()
+    Water_value = models.FloatField()
 
 

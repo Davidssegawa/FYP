@@ -84,9 +84,9 @@ def ttn_webhook(request):
         #print(data)
 
         timestamp = data.get("timestamp")
-        value = data.get("value")
+        water_value = data.get("water_value")
 
-        meter_data = Meter_data(timestamp=timestamp,value=value)
+        meter_data = Meter_data(timestamp=timestamp,water_value=water_value)
         meter_data.save()
 
         return JsonResponse({'message': 'Data received and saved.'})
@@ -102,6 +102,6 @@ class MeterDataList(APIView):
 def chart_view(request):
     meter_data = Meter_data.objects.all()
     data = [{'labels': [data.timestamp for data in meter_data],
-             'values': [data.value for data in meter_data],
+             'values': [data.Water_value for data in meter_data],
              'type': 'pie'}]
-    return render(request, 'chart.html', {'chart_data': data})
+    return render(request, 'templates/sections/Statistics.html', {'chart_data': data})
