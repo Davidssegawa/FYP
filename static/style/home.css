@@ -13,7 +13,7 @@ body{
 }
 .container {
     display:flexbox;
-    flex-direction: column;
+    flex-direction: row;
     align-items:left;
     position:fixed;
 }
