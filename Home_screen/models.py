@@ -21,3 +21,7 @@ class Meter_data(models.Model):
     text = models.FloatField()
 
 
+    def __str__(self):
+        return f"Timestamp: {self.timestamp}, Text: {self.text}"
+
+

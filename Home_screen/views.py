@@ -111,7 +111,7 @@ def ttn_webhook(request):
         return JsonResponse({'error':'Invalid request method.'}, status=405)
     
 class MeterDataList(APIView):
-    def get(self,request):
+    def get(self):
         meter_data = Meter_data.objects.all()
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
