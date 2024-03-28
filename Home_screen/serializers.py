@@ -4,4 +4,4 @@ from .models import Meter_data
 class MeterDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meter_data
-        fields = ('timestamp', 'value')  # Specify the fields you want to include in the API response
+        fields = ('timestamp', 'text')  # Specify the fields you want to include in the API response

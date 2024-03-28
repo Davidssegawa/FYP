@@ -99,11 +99,12 @@ def ttn_webhook(request):
         #timestamp = data.get("timestamp")
         text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
 
-        print("Text:",text)
-        print("Timestamp:",timestamp)
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
+
+        print("Text:",text)
+        print("Timestamp:",timestamp)
 
         return JsonResponse({'message': 'Data received and saved.'})
     else:
