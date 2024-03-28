@@ -86,6 +86,7 @@ def ttn_webhook(request):
 
 
         timestamp_str = data.get('received_at')
+        print(timestamp_str)
         if not timestamp_str:
             return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
         
