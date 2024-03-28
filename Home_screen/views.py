@@ -83,9 +83,13 @@ def ttn_webhook(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         print(data)
-
-
+        text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
         timestamp_str = data.get('received_at')
+        timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
+        print("Text:", text)
+        print("Time:",timestamp)
+
+'''        timestamp_str = data.get('received_at')
         if not timestamp_str:
             return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
         
@@ -99,16 +103,16 @@ def ttn_webhook(request):
         #timestamp = data.get("timestamp")
         text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
 
+        print("Text:",text)
+        print("Timestamp:",timestamp)
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
 
-        print("Text:",text)
-        print("Timestamp:",timestamp)
 
         return JsonResponse({'message': 'Data received and saved.'})
     else:
-        return JsonResponse({'error':'Invalid request method.'}, status=405)
+        return JsonResponse({'error':'Invalid request method.'}, status=405)'''
     
 class MeterDataList(APIView):
     def get(self,request):
