@@ -15,6 +15,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeterDataSerializer
 import json
+from django.utils import timezone
 
 def index(request):
     return render(request,'authentication/index.html')
@@ -84,21 +85,23 @@ def ttn_webhook(request):
         data = json.loads(request.body.decode('utf-8'))
         print(data)
 
+        timestamp = timezone.now()
 
-        timestamp_str = data.get('received_at')
-        #print(timestamp_str)
-        if not timestamp_str:
-            return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
+        # timestamp_str = data.get('received_at')
+        # #print(timestamp_str)
+        # if not timestamp_str:
+        #     return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
         
-        # Parse the timestamp string into a datetime object
-        try:
-            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
-            print(timestamp)
-        except ValueError:
-            return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
+        # # Parse the timestamp string into a datetime object
+        
+        # try:
+        #     timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
+        #     print(timestamp)
+        # except ValueError:
+        #     return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
 
 
-        #timestamp = data.get("timestamp")
+        # #timestamp = data.get("timestamp")
         text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
 
         print("Text:",text)
