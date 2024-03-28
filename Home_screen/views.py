@@ -86,13 +86,14 @@ def ttn_webhook(request):
 
 
         timestamp_str = data.get('received_at')
-        print(timestamp_str)
+        #print(timestamp_str)
         if not timestamp_str:
             return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
         
         # Parse the timestamp string into a datetime object
         try:
             timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
+            print(timestamp)
         except ValueError:
             return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
 
