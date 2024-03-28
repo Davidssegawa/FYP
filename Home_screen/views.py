@@ -82,7 +82,7 @@ class AddressView(CreateView):
 def ttn_webhook(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        #print(data)
+        print(data)
 
 
         timestamp_str = data.get('received_at')
