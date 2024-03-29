@@ -1,36 +1,15 @@
-<!-- Include Chart.js library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Create canvas element for the chart -->
-<canvas id="line-chart" width="800" height="400"></canvas>
-
-<script>
-    // Retrieve data passed from Django view
-    var labels = { labels };
-    var values = {values};
-
-    // Create a line chart using Chart.js
-    var ctx = document.getElementById('line-chart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Meter Data',
-                data: values,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'day' // Customize time axis if needed
-                    }
-                }
-            }
-        }
-    });
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="myPlot" style="width:100%;max-width:700px"></div>
+    {{ chart_data|json_script:"chart_data" }}
+    <script>
+        const chartData = JSON.parse(document.getElementById("chart_data").textContent);
+        const layout = {title: "Test chart"};
+        Plotly.newPlot("myPlot", chartData, layout);
+    </script>
+</body>
+</html>
