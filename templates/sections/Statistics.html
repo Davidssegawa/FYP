@@ -13,7 +13,7 @@
 
     <script>
         // Retrieve chart data passed from Django view
-        var chartData = JSON.parse({ chart_data });
+        var chartData = JSON.parse('{{ chart_data }}');
 
         // Create data trace for the pie chart
         var data = [{
