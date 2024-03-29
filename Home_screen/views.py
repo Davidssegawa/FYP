@@ -107,7 +107,7 @@ def ttn_webhook(request):
 #         return Response(serializer.data)
 
 def chart_view(request):
-    meter_data = Meter_data.objects.all()
+    meter_data = meter_data.objects.all()
     data = [{'labels': [data.timestamp for data in meter_data],
              'values': [data.text for data in meter_data],
              'type': 'line chart'}]
