@@ -136,4 +136,4 @@ def chart_view(request):
     chart_html = plot(fig, output_type='div', include_plotlyjs=False)
     
     # Render the template with chart HTML
-    return render(request, 'C:\Users\SEGAWA DAVID JOEL\Desktop\FYP_server\backend\templates\sections\Statistics.html', {'chart_html': chart_html})
+    return render(request, 'sections\Statistics.html', {'chart_html': chart_html})
