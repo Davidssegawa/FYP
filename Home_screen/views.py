@@ -16,7 +16,8 @@ from rest_framework.response import Response
 from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
-
+import plotly.graph_objs as go
+from plotly.offline import plot
 def index(request):
     return render(request,'authentication/index.html')
 
@@ -106,16 +107,33 @@ class MeterDataList(APIView):
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
 
-    def chart_view(request):
-        # Retrieve all Meter_data objects from the database
-        meter_data = Meter_data.objects.all()
-        
-        # Prepare data for the pie chart
-        labels = [data.timestamp for data in meter_data]
-        values = [data.text for data in meter_data]
-        
-        # Serialize data into JSON format
-        chart_data = json.dumps({'labels': labels, 'values': values})
-        
-        # Render template with chart data
-        return render(request, 'templates/sections/Statistics.html', {'chart_data': chart_data})
+# def chart_view(request):
+#     # Retrieve all Meter_data objects from the database
+#     meter_data = Meter_data.objects.all()
+    
+#     # Prepare data for the pie chart
+#     labels = [data.timestamp for data in meter_data]
+#     values = [data.text for data in meter_data]
+    
+#     # Serialize data into JSON format
+#     chart_data = json.dumps({'labels': labels, 'values': values})
+    
+#     # Render template with chart data
+#     return render(request, 'templates/sections/Statistics.html', {'chart_data': chart_data})
+    
+def chart_view(request):
+    # Retrieve all Meter_data objects from the database
+    meter_data = Meter_data.objects.all()
+    
+    # Prepare data for the line chart
+    timestamps = [data.timestamp for data in meter_data]
+    values = [data.text for data in meter_data]
+    
+    # Create a Plotly line chart
+    fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'))
+    
+    # Generate the HTML snippet for the chart
+    chart_html = plot(fig, output_type='div', include_plotlyjs=False)
+    
+    # Render the template with chart HTML
+    return render(request, 'your_template.html', {'chart_html': chart_html})
