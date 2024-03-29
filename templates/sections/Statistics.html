@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart</title>
+    <!-- Include Plotly library -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <div id="myPlot" style="width:100%;max-width:700px"></div>
-    {{ chart_data|json_script:"chart_data" }}
+    <!-- Create div element for the chart -->
+    <div id="chart_div" style="width: 800px; height: 500px;"></div>
+
     <script>
-        const chartData = JSON.parse(document.getElementById("chart_data").textContent);
-        const layout = {title: "Test chart"};
-        Plotly.newPlot("myPlot", chartData, layout);
+        // Retrieve chart data passed from Django view
+        var chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+        // Create data trace for the pie chart
+        var data = [{
+            values: chartData.values,
+            labels: chartData.labels,
+            type: 'pie'
+        }];
+
+        // Define layout for the pie chart
+        var layout = {
+            title: 'Pie Chart',
+            height: 500,
+            width: 800
+        };
+
+        // Render the Plotly chart
+        Plotly.newPlot('chart_div', data, layout);
     </script>
 </body>
 </html>

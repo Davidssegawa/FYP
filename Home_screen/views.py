@@ -107,8 +107,15 @@ def ttn_webhook(request):
 #         return Response(serializer.data)
 
 def chart_view(request):
+    # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
-    data = [{'labels': [data.timestamp for data in meter_data],
-             'values': [data.text for data in meter_data],
-             'type': 'pie'}]
-    return render(request, 'templates/sections/Statistics.html', {'chart_data': data})
+    
+    # Prepare data for the pie chart
+    labels = [data.timestamp for data in meter_data]
+    values = [data.text for data in meter_data]
+    
+    # Serialize data into JSON format
+    chart_data = json.dumps({'labels': labels, 'values': values})
+    
+    # Render template with chart data
+    return render(request, 'sections/statistics.html', {'chart_data': chart_data})
