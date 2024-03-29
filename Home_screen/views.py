@@ -128,7 +128,8 @@ def chart_view(request):
     # Prepare data for the line chart
     timestamps = [data.timestamp for data in meter_data]
     values = [data.text for data in meter_data]
-    
+    print("Value:",values)
+    print("Timestamp:",timestamps)
     # Create a Plotly line chart
     fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'))
     
