@@ -129,12 +129,14 @@ def chart_view(request):
     timestamps = [data.timestamp for data in meter_data]
     values = [data.text for data in meter_data]
     
+    layout = go.Layout(title='Real time line chart', xaxis={'title': 'timestamp'}, yaxis={'title': 'Water values(L)'})
     # Create a Plotly line chart
-    fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'))
+    fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'), layout=layout)
     
     chart_html = fig.to_html(full_html=False)
     # Generate the HTML snippet for the chart
     chart_html = plot(fig, output_type='div', include_plotlyjs=False)
     
     # Render the template with chart HTML
-    return render(request, 'sections\Statistics.html', {'chart_html': chart_html})
+    context = {'chart_html': chart_html}
+    return render(request, 'sections\Statistics.html',context )
