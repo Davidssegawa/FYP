@@ -118,4 +118,4 @@ def chart_view(request):
     chart_data = json.dumps({'labels': labels, 'values': values})
     
     # Render template with chart data
-    return render(request, 'sections/statistics.html', {'chart_data': chart_data})
+    return render(request, 'sections/Statistics.html', {'chart_data': chart_data})
