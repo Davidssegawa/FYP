@@ -128,8 +128,7 @@ def chart_view(request):
     # Prepare data for the line chart
     timestamps = [data.timestamp for data in meter_data]
     values = [data.text for data in meter_data]
-    print("Value:",values)
-    print("Timestamp:",timestamps)
+    
     # Create a Plotly line chart
     fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'))
     
@@ -137,4 +136,4 @@ def chart_view(request):
     chart_html = plot(fig, output_type='div', include_plotlyjs=False)
     
     # Render the template with chart HTML
-    return render(request, 'templates/sections/Statistics.html', {'chart_html': chart_html})
+    return render(request, 'C:\Users\SEGAWA DAVID JOEL\Desktop\FYP_server\backend\templates\sections\Statistics.html', {'chart_html': chart_html})
