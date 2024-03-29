@@ -132,6 +132,7 @@ def chart_view(request):
     # Create a Plotly line chart
     fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'))
     
+    chart_html = fig.to_html(full_html=False)
     # Generate the HTML snippet for the chart
     chart_html = plot(fig, output_type='div', include_plotlyjs=False)
     
