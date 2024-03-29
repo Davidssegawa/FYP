@@ -14,5 +14,5 @@ urlpatterns =[
     path('home/statistics/',views.statistics,name='statistics'),
     path('home/registermeter/',views.registerMeter,name='registermeter'),
     path('webhook/ttn/', views.ttn_webhook),
-    path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
+    #path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
 ]
