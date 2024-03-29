@@ -87,25 +87,10 @@ def ttn_webhook(request):
 
         timestamp = timezone.now()
 
-        # timestamp_str = data.get('received_at')
-        # #print(timestamp_str)
-        # if not timestamp_str:
-        #     return JsonResponse({'error': 'Timestamp missing or null'}, status=400)
-        
-        # # Parse the timestamp string into a datetime object
-        
-        # try:
-        #     timestamp = datetime.strptime(timestamp_str, '%Y-%m-%dT%H:%M:%SZ')
-        #     print(timestamp)
-        # except ValueError:
-        #     return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
-
-
-        # #timestamp = data.get("timestamp")
         text = data.get("uplink_message",{}).get('decoded_payload',{}).get('text')
 
-        print("Text:",text)
-        print("Timestamp:",timestamp)
+        #print("Text:",text)
+        #print("Timestamp:",timestamp)
 
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
@@ -116,8 +101,9 @@ def ttn_webhook(request):
         return JsonResponse({'error':'Invalid request method.'}, status=405)
     
 class MeterDataList(APIView):
-    def get(self):
+    def get(self, request):
         meter_data = Meter_data.objects.all()
+        print(meter_data)
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
 
@@ -125,5 +111,5 @@ def chart_view(request):
     meter_data = Meter_data.objects.all()
     data = [{'labels': [data.timestamp for data in meter_data],
              'values': [data.text for data in meter_data],
-             'type': 'pie'}]
+             'type': 'line chart'}]
     return render(request, 'templates/sections/Statistics.html', {'chart_data': data})
