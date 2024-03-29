@@ -13,7 +13,7 @@ from .models import Meter_Address,Meter_data
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeterDataSerializer
+#from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
 
@@ -100,22 +100,22 @@ def ttn_webhook(request):
     else:
         return JsonResponse({'error':'Invalid request method.'}, status=405)
     
-class MeterDataList(APIView):
+'''class MeterDataList(APIView):
     def get(self, request):
         meter_data = Meter_data.objects.all()
         serializer = MeterDataSerializer(meter_data, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data)'''
 
-    def chart_view(request):
-        # Retrieve all Meter_data objects from the database
-        meter_data = Meter_data.objects.all()
-        
-        # Prepare data for the pie chart
-        labels = [data.timestamp for data in meter_data]
-        values = [data.text for data in meter_data]
-        
-        # Serialize data into JSON format
-        chart_data = json.dumps({'labels': labels, 'values': values})
-        
-        # Render template with chart data
-        return render(request, 'templates/sections/Statistics.html', {'chart_data': chart_data})
+def chart_view(request):
+    # Retrieve all Meter_data objects from the database
+    meter_data = Meter_data.objects.all()
+    
+    # Prepare data for the pie chart
+    labels = [data.timestamp for data in meter_data]
+    values = [data.text for data in meter_data]
+    
+    # Serialize data into JSON format
+    chart_data = json.dumps({'labels': labels, 'values': values})
+    
+    # Render template with chart data
+    return render(request, 'templates/sections/Statistics.html', {'chart_data': chart_data})
