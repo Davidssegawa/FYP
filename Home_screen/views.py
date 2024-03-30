@@ -18,6 +18,8 @@ from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
 import plotly.express as px
+#from plotly.offline import plot
+#from plotly.graph_objs import scatter
 def index(request):
     return render(request,'authentication/index.html')
 
@@ -106,7 +108,8 @@ class MeterDataList(APIView):
 def chart_view(request):
     # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
-    
+    serializer = MeterDataSerializer(meter_data, many=True)
+    print(serializer.data)
     # Prepare data for the line chart
     x=[data.timestamp.time for data in meter_data],
     y=[data.text for data in meter_data],
@@ -117,6 +120,7 @@ def chart_view(request):
         y=y,
         title= "Real-time water usage",
         labels = {'x': 'Timestamp','y':'Water measurements'}
+
     )
     #layout = go.Layout(title='Real time line chart', xaxis={'title': 'timestamp'}, yaxis={'title': 'Water values(L)'})
     # Create a Plotly line chart
