@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import CreateView
+import pandas as pd
 from .models import Meter_Address,Meter_data 
 from django.http import JsonResponse
 from rest_framework.views import APIView
@@ -107,10 +108,13 @@ def chart_view(request):
     meter_data = Meter_data.objects.all()
     
     # Prepare data for the line chart
-    
+    x=[data.timestamp.time for data in meter_data],
+    y=[data.text for data in meter_data],
+    df = pd.Dataframe({'timestamp':x,'text':y})
     fig = px.line(
-        x=[data.timestamp.time for data in meter_data],
-        y=[data.text for data in meter_data],
+        df,
+        x=x,
+        y=y,
         title= "Real-time water usage",
         labels = {'x': 'Timestamp','y':'Water measurements'}
     )
