@@ -138,6 +138,8 @@ def chart_view(request):
             meter_data = meter_data.filter(timestamp__gte=start_timestamp)
         if end_timestamp:
             meter_data = meter_data.filter(timestamp__lte=end_timestamp)
+
+    meter_data = meter_data.order_by('timestamp')
     data = {
         'Timestamp': [data.timestamp for data in meter_data],
         'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
