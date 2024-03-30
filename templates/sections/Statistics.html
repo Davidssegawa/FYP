@@ -9,7 +9,6 @@
 </head>
 <body>
     <!-- Render the chart HTML snippet passed from the view -->
-    {{ chart_html|safe }}
-    <div>Hello</div>
+    <div id="plotly_graph">{{ chart_html|safe }}</div>
 </body>
 </html>
