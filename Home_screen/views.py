@@ -16,8 +16,7 @@ from rest_framework.response import Response
 from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
-import plotly.graph_objs as go
-from plotly.offline import plot
+import plotly.express as px
 def index(request):
     return render(request,'authentication/index.html')
 
@@ -126,16 +125,18 @@ def chart_view(request):
     meter_data = Meter_data.objects.all()
     
     # Prepare data for the line chart
-    timestamps = [data.timestamp for data in meter_data]
-    values = [data.text for data in meter_data]
     
-    layout = go.Layout(title='Real time line chart', xaxis={'title': 'timestamp'}, yaxis={'title': 'Water values(L)'})
+    fig = px.line(
+        x=[data.timestamp for data in meter_data],
+        y=[data.text for data in meter_data],
+    )
+    #layout = go.Layout(title='Real time line chart', xaxis={'title': 'timestamp'}, yaxis={'title': 'Water values(L)'})
     # Create a Plotly line chart
-    fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'), layout=layout)
+    #fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'), layout=layout)
     
     chart_html = fig.to_html(full_html=False)
     # Generate the HTML snippet for the chart
-    chart_html = plot(fig, output_type='div', include_plotlyjs=False)
+    #chart_html = plot(fig, output_type='div', include_plotlyjs=False)
     
     # Render the template with chart HTML
     context = {'chart_html': chart_html}
