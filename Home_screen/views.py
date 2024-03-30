@@ -108,14 +108,15 @@ class MeterDataList(APIView):
 def chart_view(request):
     # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
+    print(meter_data)
     serializer = MeterDataSerializer(meter_data, many=True)
     print(serializer.data)
     # Prepare data for the line chart
-    x=[data.timestamp.time for data in meter_data],
-    y=[data.text for data in meter_data],
-    df = pd.Dataframe({'timestamp':x,'text':y})
+    x=[data.timestamp for data in meter_data]
+    y=[data.text for data in meter_data]
+    #df = pd.Dataframe({'timestamp':x,'text':y})
     fig = px.line(
-        df,
+        # df,
         x=x,
         y=y,
         title= "Real-time water usage",

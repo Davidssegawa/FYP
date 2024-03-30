@@ -11,7 +11,7 @@ urlpatterns =[
     path('signout/',views.signout,name='signout'),
     path('home/map/',AddressView.as_view(),name='location'),
     #path('map/',views.map, name='map'),
-    path('home/statistics/',views.statistics,name='statistics'),
+    path('home/statistics/',views.chart_view,name='statistics'),
     path('home/registermeter/',views.registerMeter,name='registermeter'),
     path('webhook/ttn/', views.ttn_webhook),
     #path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
