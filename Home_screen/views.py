@@ -18,6 +18,7 @@ from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
 import plotly.express as px
+from .forms import DateRangeForm
 #from plotly.offline import plot
 #from plotly.graph_objs import scatter
 def index(request):
@@ -105,20 +106,57 @@ class MeterDataList(APIView):
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
     
+# def chart_view(request):
+#     # Retrieve all Meter_data objects from the database
+#     meter_data = Meter_data.objects.all()
+        
+#     # Prepare data for the line chart
+
+#     fig = px.line(
+#         x=[data.timestamp for data in meter_data],
+#         y=[data.text for data in meter_data],
+#         title= "Real-time water usage",
+#         labels = {'x': 'Timestamp','y':'Water measurements'}
+
+#     )
+        
+#     chart_html = fig.to_html(full_html=False)
+#     context = {'chart_html': chart_html}
+#     return render(request, 'sections/Statistics.html',context )
+    
 def chart_view(request):
+    form = DateRangeForm(request.GET or None)  # Initialize the form instance
+    
     # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
-        
+
+    if form.is_valid():
+        start_timestamp = form.cleaned_data.get('start_timestamp')
+        end_timestamp = form.cleaned_data.get('end_timestamp')
+
+        if start_timestamp:
+            meter_data = meter_data.filter(timestamp__gte=start_timestamp)
+        if end_timestamp:
+            meter_data = meter_data.filter(timestamp__lte=end_timestamp)
+    data = {
+        'Timestamp': [data.timestamp for data in meter_data],
+        'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
+    }
+
+    # Create a DataFrame from the data dictionary
+    df = pd.DataFrame(data)
+
+    # Create the line chart
+    fig = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
     # Prepare data for the line chart
+    # fig = px.line(
+    #     df,
+    #     x='Timestamp',
+    #     y='Water Measurements',
+    #     title="Real-time water usage",
+    #     labels={'x': 'Timestamp', 'y': 'Water measurements'}
+    # )
 
-    fig = px.line(
-        x=[data.timestamp for data in meter_data],
-        y=[data.text for data in meter_data],
-        title= "Real-time water usage",
-        labels = {'x': 'Timestamp','y':'Water measurements'}
-
-    )
-        
     chart_html = fig.to_html(full_html=False)
-    context = {'chart_html': chart_html}
-    return render(request, 'sections/Statistics.html',context )
+    context = {'chart_html': chart_html, "form": form}
+    return render(request, 'sections/Statistics.html', context)
