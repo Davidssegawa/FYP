@@ -133,4 +133,4 @@ def chart_view(request):
     
     # Render the template with chart HTML
     context = {'chart_html': chart_html}
-    return render(request, 'sections\Statistics.html',context )
+    return render(request, 'sections/Statistics.html',context )
