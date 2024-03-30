@@ -109,7 +109,7 @@ def chart_view(request):
     # Prepare data for the line chart
     
     fig = px.line(
-        x=[data.timestamp for data in meter_data],
+        x=[data.timestamp.time for data in meter_data],
         y=[data.text for data in meter_data],
         title= "Real-time water usage",
         labels = {'x': 'Timestamp','y':'Water measurements'}
