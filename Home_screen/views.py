@@ -13,7 +13,7 @@ from .models import Meter_Address,Meter_data
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-#from .serializers import MeterDataSerializer
+from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
 import plotly.express as px
@@ -95,16 +95,12 @@ def ttn_webhook(request):
         meter_data = Meter_data(timestamp=timestamp,text=text)
         meter_data.save()
 
-
-        return JsonResponse({'message': 'Data received and saved.'})
-    else:
-        return JsonResponse({'error':'Invalid request method.'}, status=405)
     
-# class MeterDataList(APIView):
-#     def get(self, request):
-#         meter_data = Meter_data.objects.all()
-#         serializer = MeterDataSerializer(meter_data, many=True)
-#         return Response(serializer.data)
+class MeterDataList(APIView):
+    def get(self, request):
+        meter_data = Meter_data.objects.all()
+        serializer = MeterDataSerializer(meter_data, many=True)
+        return Response(serializer.data)
     
 def chart_view(request):
     # Retrieve all Meter_data objects from the database
