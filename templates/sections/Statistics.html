@@ -8,6 +8,10 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
+    <form method="GET" >
+        {{form.as_p}} 
+        <button>Submit</button>
+     </form>
     <!-- Render the chart HTML snippet passed from the view -->
     <div id="plotly_graph" style="height: 600px; width: 600px;">{{ chart_html|safe }}</div>
 </body>
