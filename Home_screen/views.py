@@ -108,9 +108,7 @@ class MeterDataList(APIView):
 def chart_view(request):
     # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
-    
-    serializer = MeterDataSerializer(meter_data, many=True)
-    
+        
     # Prepare data for the line chart
 
     fig = px.line(
