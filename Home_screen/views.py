@@ -108,29 +108,19 @@ class MeterDataList(APIView):
 def chart_view(request):
     # Retrieve all Meter_data objects from the database
     meter_data = Meter_data.objects.all()
-    print(meter_data)
+    
     serializer = MeterDataSerializer(meter_data, many=True)
-    print(serializer.data)
+    
     # Prepare data for the line chart
-    x=[data.timestamp for data in meter_data]
-    y=[data.text for data in meter_data]
-    #df = pd.Dataframe({'timestamp':x,'text':y})
+
     fig = px.line(
-        # df,
-        x=x,
-        y=y,
+        x=[data.timestamp for data in meter_data],
+        y=[data.text for data in meter_data],
         title= "Real-time water usage",
         labels = {'x': 'Timestamp','y':'Water measurements'}
 
     )
-    #layout = go.Layout(title='Real time line chart', xaxis={'title': 'timestamp'}, yaxis={'title': 'Water values(L)'})
-    # Create a Plotly line chart
-    #fig = go.Figure(data=go.Scatter(x=timestamps, y=values, mode='lines'), layout=layout)
-    
+        
     chart_html = fig.to_html(full_html=False)
-    # Generate the HTML snippet for the chart
-    #chart_html = plot(fig, output_type='div', include_plotlyjs=False)
-    
-    # Render the template with chart HTML
     context = {'chart_html': chart_html}
     return render(request, 'sections/Statistics.html',context )
