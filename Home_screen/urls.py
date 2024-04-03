@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import AddressView
-#from .views import MeterDataList
+from .views import MeterDataList
 
 urlpatterns =[
     path('',views.index, name = 'index'),
@@ -14,5 +14,5 @@ urlpatterns =[
     path('home/statistics/',views.chart_view,name='statistics'),
     path('home/registermeter/',views.registerMeter,name='registermeter'),
     path('webhook/ttn/', views.ttn_webhook),
-    #path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
+    path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
 ]
