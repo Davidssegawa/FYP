@@ -19,6 +19,8 @@ import json
 from django.utils import timezone
 import plotly.express as px
 from .forms import DateRangeForm
+from .models import WaterUnit
+from .serializers import WaterUnitSerializer
 #from plotly.offline import plot
 #from plotly.graph_objs import scatter
 def index(request):
@@ -105,7 +107,12 @@ class MeterDataList(APIView):
         meter_data = Meter_data.objects.all()
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
-    
+
+class WaterUnitList(APIView):
+    def get(self, request):
+        water_units = WaterUnit.objects.all()
+        serializer = WaterUnitSerializer(water_units, many=True)
+        return Response(serializer.data)    
 # def chart_view(request):
 #     # Retrieve all Meter_data objects from the database
 #     meter_data = Meter_data.objects.all()
