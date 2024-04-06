@@ -10,19 +10,23 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import CreateView
 import pandas as pd
+from requests import Response
 from .models import Meter_Address,Meter_data 
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import generics
 from .serializers import MeterDataSerializer
 import json
 from django.utils import timezone
 import plotly.express as px
 from .forms import DateRangeForm
-from .models import WaterUnit
-from .serializers import WaterUnitSerializer
+from .models import PrepaymentOption, Transaction
+from .serializers import PrepaymentOptionSerializer,TransactionSerializer
 #from plotly.offline import plot
 #from plotly.graph_objs import scatter
+
+
 def index(request):
     return render(request,'authentication/index.html')
 
@@ -108,11 +112,19 @@ class MeterDataList(APIView):
         serializer = MeterDataSerializer(meter_data, many=True)
         return Response(serializer.data)
 
-class WaterUnitList(APIView):
-    def get(self, request):
-        water_units = WaterUnit.objects.all()
-        serializer = WaterUnitSerializer(water_units, many=True)
-        return Response(serializer.data)    
+# class WaterUnitList(APIView):
+#     def get(self, request):
+#         water_units = WaterUnit.objects.all()
+#         serializer = WaterUnitSerializer(water_units, many=True)
+#         return Response(serializer.data)   
+
+class PrepaymentOptionList(generics.ListCreateAPIView):
+    queryset = PrepaymentOption.objects.all()
+    serializer_class = PrepaymentOptionSerializer
+
+class TransactionList(generics.ListCreateAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
 # def chart_view(request):
 #     # Retrieve all Meter_data objects from the database
 #     meter_data = Meter_data.objects.all()

@@ -1,11 +1,24 @@
 from rest_framework import serializers
-from .models import Meter_data, WaterUnit
+from .models import Meter_data,PrepaymentOption,Transaction
 
 class MeterDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meter_data
         fields = ('timestamp', 'text')  # Specify the fields you want to include in the API response
-class WaterUnitSerializer(serializers.ModelSerializer):
+
+
+# class WaterUnitSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = WaterUnit
+#         fields = ['id', 'name', 'price']  # Define fields to include in the API response
+
+
+class PrepaymentOptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = WaterUnit
-        fields = ['id', 'name', 'price']  # Define fields to include in the API response
+        model = PrepaymentOption
+        fields = '__all__'
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = '__all__'
