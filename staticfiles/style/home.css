@@ -4,18 +4,19 @@
     box-sizing: border-box;
 }
 body{
-    background-color: rgba(30, 186, 247, 0.916);
-    /*display: flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    height: 100vh;*/
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgba(30, 186, 247, 0.916);
+    height: 100%; /* Ensures the content is centered vertically */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .container {
-    display:flexbox;
-    flex-direction: column;
-    align-items:left;
-    position:fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 200px;
 }
 
 .item {
