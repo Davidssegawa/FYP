@@ -15,6 +15,18 @@
         .sub-section {
             flex-basis: 48%; /* Adjust width of sections */
             margin-bottom: 20px; /* Adjust margin between sections */
+            padding: 20px; /* Add padding to sections */
+            border: 1px solid #ccc; /* Add border to sections */
+            border-radius: 5px; /* Add border radius for rounded corners */
+            background-color: #f9f9f9; /* Add background color to sections */
+        }
+
+        .sub-section:nth-child(odd) {
+            margin-right: 20px; /* Add margin to right side of odd-numbered sections */
+        }
+
+        .sub-section:nth-child(even) {
+            margin-left: 20px; /* Add margin to left side of even-numbered sections */
         }
     </style>
 </head>
