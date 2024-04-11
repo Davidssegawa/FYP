@@ -23,7 +23,7 @@ import plotly.express as px
 from .forms import DateRangeForm
 from .models import PrepaymentOption, Transaction
 from .serializers import PrepaymentOptionSerializer,TransactionSerializer
-#from plotly.offline import plot
+import plotly.graph_objs as go
 #from plotly.graph_objs import scatter
 
 
@@ -182,13 +182,21 @@ def chart_view(request):
     # Create the pie chart
     fig_pie = px.pie(aggregated_data, names='Month', values='Water Measurements', title='Monthly Water Usage')
 
-    # Convert both plots to HTML
+    # Create the bar graph
+    fig_bar = go.Figure()
+    fig_bar.add_trace(go.Bar(x=aggregated_data['Month'], y=aggregated_data['Water Measurements'], 
+                             marker_color='blue', text=aggregated_data['Water Measurements'],
+                             textposition='auto', name='Monthly Water Usage'))
+
+    # Convert all plots to HTML
     chart_html_line = fig_line.to_html(full_html=False)
     chart_html_pie = fig_pie.to_html(full_html=False)
+    chart_html_bar = fig_bar.to_html(full_html=False)
 
     context = {
         'chart_html_line': chart_html_line,
         'chart_html_pie': chart_html_pie,
+        'chart_html_bar': chart_html_bar,  # New chart
         'total_water_consumption': total_water_consumption,
         'form': form
     }
