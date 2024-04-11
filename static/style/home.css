@@ -7,7 +7,7 @@
 body {
     background-color: rgba(30, 186, 247, 0.916);
     height: 100%;
-    margin: 20px;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
