@@ -143,6 +143,8 @@ class TransactionList(generics.ListCreateAPIView):
 #     context = {'chart_html': chart_html}
 #     return render(request, 'sections/Statistics.html',context )
     
+from datetime import datetime
+
 def chart_view(request):
     form = DateRangeForm(request.GET or None)  # Initialize the form instance
     
@@ -167,20 +169,17 @@ def chart_view(request):
     # Create a DataFrame from the data dictionary
     df = pd.DataFrame(data)
 
+    # Extract month from the timestamp
+    df['Month'] = pd.to_datetime(df['Timestamp']).dt.month
+
+    # Aggregate water measurements data by month
+    aggregated_data = df.groupby('Month')['Water Measurements'].sum().reset_index()
+
     # Create the line chart
     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
-    # Create data for the pie chart
-    pie_data = {
-        'Labels': ['Label 1', 'Label 2', 'Label 3'],  # Example labels
-        'Values': [50, 30, 20]  # Example values
-    }
-
-    # Create a DataFrame for the pie chart data
-    df_pie = pd.DataFrame(pie_data)
-
     # Create the pie chart
-    fig_pie = px.pie(df_pie, names='Labels', values='Values', title='Pie Chart')
+    fig_pie = px.pie(aggregated_data, names='Month', values='Water Measurements', title='Monthly Water Usage')
 
     # Convert both plots to HTML
     chart_html_line = fig_line.to_html(full_html=False)
