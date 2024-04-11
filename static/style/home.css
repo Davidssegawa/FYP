@@ -69,13 +69,13 @@ button {
     font-weight: bold;
 }
 .taskbar {
-    /* position: fixed; */
+    position: fixed; 
     top: 0; /* Adjust top position as needed */
     left: 0; /* Adjust left position as needed */
     background-color: lightblue;
     padding: 20px 0;
     border-radius: 5px;
-    /* margin-top: 0; */
+    margin: 0; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
