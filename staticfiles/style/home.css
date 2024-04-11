@@ -74,3 +74,29 @@ button{
     color: #333;
     font-weight: bold;
 }
+.taskbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 150px; /* Adjust width as needed */
+    height: 100%;
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px; /* Adjust top padding for space from the top */
+  }
+  
+  .taskbar-item {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  
+  .taskbar-item:hover {
+    background-color: #b0e0e6; /* Change the hover color as desired */
+  }
+  
