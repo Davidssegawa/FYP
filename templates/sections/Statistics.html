@@ -4,48 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistics</title>
-    <!-- Include Plotly library (optional if already included in the chart HTML snippet) -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
-        .charts-section {
+        .main-section {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             margin-top: 20px;
         }
 
-        .chart {
-            flex: 1;
-            margin-right: 20px; /* Adjust margin between charts */
-        }
-
-        .chart:last-child {
-            margin-right: 0;
-        }
-        .cumulative-section {
-            margin-top: 40px;
-            text-align: center;
+        .sub-section {
+            flex-basis: 48%; /* Adjust width of sections */
+            margin-bottom: 20px; /* Adjust margin between sections */
         }
     </style>
 </head>
 <body>
-    <div class="charts-section">
-        <div class="chart">
+    <div class="main-section">
+        <div class="sub-section">
             <!-- Render the line chart -->
             {{ chart_html_line|safe }}
         </div>
-        <div class="chart">
+        <div class="sub-section">
             <!-- Render the pie chart -->
             {{ chart_html_pie|safe }}
         </div>
-        <div class="chart">
-            <!--Render the bar graph-->
+        <div class="sub-section">
+            <!-- Render the bar chart -->
             {{chart_html_bar|safe}}
+        </div>
+        <div class="sub-section">
+            <!-- Render additional content here -->
+            <h2>Cumulative Water Consumption</h2>
+            <p>Total water consumption: {{ total_water_consumption }}</p>
         </div>
 
     </div>
-    <div class='cumulative-section'>
-        <h2>Cumulative Water Consumption</h2>
-        <p>Total water consumption: {{ total_water_consumption }}</p>
+
+    <div class="main-section">
+        <div class="sub-section">
+            <!-- Render another chart here -->
+        </div>
+        <div class="sub-section">
+            <!-- Render another chart here -->
+        </div>
+        <div class="sub-section">
+            <!-- Render additional content here -->
+        </div>
+        <div class="sub-section">
+            <!-- Render additional content here -->
+        </div>
     </div>
 </body>
 </html>
