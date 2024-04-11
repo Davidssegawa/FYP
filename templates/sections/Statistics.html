@@ -21,6 +21,10 @@
         .chart:last-child {
             margin-right: 0;
         }
+        .cumulative-section {
+            margin-top: 40px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -33,6 +37,15 @@
             <!-- Render the pie chart -->
             {{ chart_html_pie|safe }}
         </div>
+        <div class="chart">
+            <!--Render the bar graph-->
+            {{chart_html_bar|safe}}
+        </div>
+
+    </div>
+    <div class='cumulative-section'>
+        <h2>Cumulative Water Consumption</h2>
+        <p>Total water consumption: {{ total_water_consumption }}</p>
     </div>
 </body>
 </html>
