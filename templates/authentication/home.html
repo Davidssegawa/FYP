@@ -8,7 +8,12 @@
 </head>
 
 <body>
-
+    <div class="taskbar">
+        <a href="#" class="taskbar-item">Home</a>
+        <a href="#" class="taskbar-item">Notifications</a>
+        <a href="statistics/" class="taskbar-item">Statistics</a>
+        <a href="registermeter/" class="taskbar-item">Registered Meters</a>
+      </div>
     {% if user.is_authenticated%}
     
     <button type="submit"><a href='/signout/'>SignOut</a></button>
@@ -18,12 +23,7 @@
     <button type="submit"><a href='/signin/'>SignIn</a></button>
 
     {% endif %}
-    <div class="taskbar">
-        <a href="#" class="taskbar-item">Home</a>
-        <a href="#" class="taskbar-item">Notifications</a>
-        <a href="statistics/" class="taskbar-item">Statistics</a>
-        <a href="registermeter/" class="taskbar-item">Registered Meters</a>
-      </div>
+    
       
     <div class="container">
         <div class="item"><a href="statistics/">Statistics</a></div>
