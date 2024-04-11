@@ -7,7 +7,7 @@
     <!-- Include Plotly library (optional if already included in the chart HTML snippet) -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
-        .charts-container {
+        .charts-section {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
@@ -24,15 +24,15 @@
     </style>
 </head>
 <body>
-    <form method="GET" >
-        {{form.as_p}} 
-        <button>Submit</button>
-     </form>
-    <!-- Render the chart HTML snippet passed from the view -->
-    <div id="chart" >{{ chart_html_line|safe }}</div>
-    <div class="chart">
-        <!-- Render the pie chart -->
-        {{ chart_html_pie|safe }}
+    <div class="charts-section">
+        <div class="chart">
+            <!-- Render the line chart -->
+            {{ chart_html_line|safe }}
+        </div>
+        <div class="chart">
+            <!-- Render the pie chart -->
+            {{ chart_html_pie|safe }}
+        </div>
     </div>
 </body>
 </html>
