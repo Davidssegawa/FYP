@@ -175,6 +175,7 @@ def chart_view(request):
     # Aggregate water measurements data by month
     aggregated_data = df.groupby('Month')['Water Measurements'].sum().reset_index()
 
+    total_water_consumption = df['Water Measurements'].sum()
     # Create the line chart
     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
@@ -188,6 +189,7 @@ def chart_view(request):
     context = {
         'chart_html_line': chart_html_line,
         'chart_html_pie': chart_html_pie,
+        'total_water_consumption': total_water_consumption,
         'form': form
     }
     return render(request, 'sections/Statistics.html', context)
