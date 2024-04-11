@@ -168,16 +168,27 @@ def chart_view(request):
     df = pd.DataFrame(data)
 
     # Create the line chart
-    fig = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
-    # Prepare data for the line chart
-    # fig = px.line(
-    #     df,
-    #     x='Timestamp',
-    #     y='Water Measurements',
-    #     title="Real-time water usage",
-    #     labels={'x': 'Timestamp', 'y': 'Water measurements'}
-    # )
+    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
-    chart_html = fig.to_html(full_html=False)
-    context = {'chart_html': chart_html, "form": form}
+    # Create data for the pie chart
+    pie_data = {
+        'Labels': ['Label 1', 'Label 2', 'Label 3'],  # Example labels
+        'Values': [50, 30, 20]  # Example values
+    }
+
+    # Create a DataFrame for the pie chart data
+    df_pie = pd.DataFrame(pie_data)
+
+    # Create the pie chart
+    fig_pie = px.pie(df_pie, names='Labels', values='Values', title='Pie Chart')
+
+    # Convert both plots to HTML
+    chart_html_line = fig_line.to_html(full_html=False)
+    chart_html_pie = fig_pie.to_html(full_html=False)
+
+    context = {
+        'chart_html_line': chart_html_line,
+        'chart_html_pie': chart_html_pie,
+        'form': form
+    }
     return render(request, 'sections/Statistics.html', context)

@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Line Chart</title>
+    <title>Statistics</title>
     <!-- Include Plotly library (optional if already included in the chart HTML snippet) -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .chart {
+            flex: 1;
+            margin-right: 20px; /* Adjust margin between charts */
+        }
+
+        .chart:last-child {
+            margin-right: 0;
+        }
+    </style>
 </head>
 <body>
     <form method="GET" >
@@ -13,6 +29,10 @@
         <button>Submit</button>
      </form>
     <!-- Render the chart HTML snippet passed from the view -->
-    <div id="plotly_graph" style="height: 600px; width: 600px;">{{ chart_html|safe }}</div>
+    <div id="chart" >{{ chart_html|safe }}</div>
+    <div class="chart">
+        <!-- Render the pie chart -->
+        {{ chart_html_pie|safe }}
+    </div>
 </body>
 </html>
