@@ -241,7 +241,9 @@ def chart_view(request):
     df['Day'] = pd.to_datetime(df['Timestamp']).dt.day
 
     # Aggregate water measurements data by day
-    aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
+    # Aggregate water measurements data by day and convert 'Day' column to datetime type
+    aggregated_data = df.groupby(df['Day'].dt.date)['Water Measurements'].sum().reset_index()
+    aggregated_data['Day'] = pd.to_datetime(aggregated_data['Day'])
 
     total_water_consumption = df['Water Measurements'].sum()
 
