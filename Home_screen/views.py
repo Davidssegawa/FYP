@@ -237,11 +237,11 @@ def chart_view(request):
     # Create a DataFrame from the data dictionary
     df = pd.DataFrame(data)
 
-    # Extract week from the timestamp
-    df['Week'] = pd.to_datetime(df['Timestamp']).dt.week
+    # Extract day from the timestamp
+    df['Week'] = pd.to_datetime(df['Timestamp']).dt.day
 
-    # Aggregate water measurements data by week
-    aggregated_data = df.groupby('Week')['Water Measurements'].sum().reset_index()
+    # Aggregate water measurements data by day
+    aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
 
     total_water_consumption = df['Water Measurements'].sum()
 
@@ -249,22 +249,22 @@ def chart_view(request):
     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
     # Create the updated pie chart with weekly data
-    fig_pie_weekly = px.pie(aggregated_data, names='Week', values='Water Measurements', title='Weekly Water Usage')
+    fig_pie_weekly = px.pie(aggregated_data, names='Day', values='Water Measurements', title='Daily Water Usage')
 
     # Create the bar graph
     fig_bar = go.Figure()
-    fig_bar.add_trace(go.Bar(x=aggregated_data['Week'], y=aggregated_data['Water Measurements'], 
+    fig_bar.add_trace(go.Bar(x=aggregated_data['Day'], y=aggregated_data['Water Measurements'], 
                              marker_color='blue', text=aggregated_data['Water Measurements'],
-                             textposition='auto', name='Weekly Water Usage'))
+                             textposition='auto', name='Daily Water Usage'))
 
     # Convert all plots to HTML
     chart_html_line = fig_line.to_html(full_html=False)
-    chart_html_pie_weekly = fig_pie_weekly.to_html(full_html=False)
+    chart_html_pie_daily = fig_pie_weekly.to_html(full_html=False)
 
     # ... (other code for rendering templates or returning HTTP responses)
     context = {
     'chart_html_line': chart_html_line,
-    'chart_html_pie': chart_html_pie_weekly,
+    'chart_html_pie': chart_html_pie_daily,
     # 'chart_html_bar': chart_html_bar,  # New chart
     'total_water_consumption': total_water_consumption,
     'form': form
