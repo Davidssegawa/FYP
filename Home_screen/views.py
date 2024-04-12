@@ -241,9 +241,7 @@ def chart_view(request):
     df['Day'] = pd.to_datetime(df['Timestamp']).dt.day
 
     # Aggregate water measurements data by day
-    # Aggregate water measurements data by day and convert 'Day' column to datetime type
-    aggregated_data = df.groupby(df['Day'].dt.date)['Water Measurements'].sum().reset_index()
-    aggregated_data['Day'] = pd.to_datetime(aggregated_data['Day'])
+    aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
 
     total_water_consumption = df['Water Measurements'].sum()
 
@@ -252,7 +250,7 @@ def chart_view(request):
 
    # Create the updated pie chart with daily data
     fig_pie_daily = go.Figure(go.Pie(
-        labels=aggregated_data['Day'].dt.strftime('%Y-%m-%d'),  # Use the entire date as labels
+        labels=aggregated_data['Day'].apply(lambda x: f'Day {x}'),  # Custom labels
         values=aggregated_data['Water Measurements'],
         title='Daily Water Usage',
         textposition='outside',  # Place labels outside the pie chart
