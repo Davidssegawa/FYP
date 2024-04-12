@@ -237,7 +237,7 @@ def chart_view(request):
     for interval in intervals:
         start_interval, end_interval = interval
         water_measurements_sum = meter_data.filter(timestamp__gte=start_interval, timestamp__lt=end_interval).aggregate(total=Sum('water_measurements'))['total']
-        aggregated_data.append({'Interval': start_interval.strftime('%Y-%m-%d'), 'Water Measurements': water_measurements_sum or 0})
+        aggregated_data.append({'Interval': start_interval.strftime('%Y-%m-%d'), 'text': water_measurements_sum or 0})
 
     # Convert aggregated data to DataFrame
     df = pd.DataFrame(aggregated_data)
