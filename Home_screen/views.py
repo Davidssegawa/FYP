@@ -249,7 +249,7 @@ def chart_view(request):
     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
     # Create the updated pie chart with weekly data
-    fig_pie_weekly = px.pie(aggregated_data, names='Day', values='Water Measurements', title='Daily Water Usage')
+    fig_pie_daily = px.pie(aggregated_data, names='Day', values='Water Measurements', title='Daily Water Usage',textinfo='percent+label')
 
     # Create the bar graph
     fig_bar = go.Figure()
@@ -259,7 +259,7 @@ def chart_view(request):
 
     # Convert all plots to HTML
     chart_html_line = fig_line.to_html(full_html=False)
-    chart_html_pie_daily = fig_pie_weekly.to_html(full_html=False)
+    chart_html_pie_daily = fig_pie_daily.to_html(full_html=False)
 
     # ... (other code for rendering templates or returning HTTP responses)
     context = {
