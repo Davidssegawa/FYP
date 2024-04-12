@@ -248,8 +248,13 @@ def chart_view(request):
     # Create the line chart
     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
 
-    # Create the updated pie chart with weekly data
-    fig_pie_daily = px.pie(aggregated_data, names='Day', values='Water Measurements', title='Daily Water Usage',textinfo='percent+label')
+   # Create the updated pie chart with daily data
+    fig_pie_daily = go.Figure(go.Pie(
+        labels=aggregated_data['Day'].apply(lambda x: f'Day {x}'),  # Custom labels
+        values=aggregated_data['Water Measurements'],
+        title='Daily Water Usage',
+        textposition='outside',  # Place labels outside the pie chart
+    ))
 
     # Create the bar graph
     fig_bar = go.Figure()
