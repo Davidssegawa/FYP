@@ -238,7 +238,7 @@ def chart_view(request):
     df = pd.DataFrame(data)
 
     # Extract day from the timestamp
-    df['Week'] = pd.to_datetime(df['Timestamp']).dt.day
+    df['Day'] = pd.to_datetime(df['Timestamp']).dt.day
 
     # Aggregate water measurements data by day
     aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
