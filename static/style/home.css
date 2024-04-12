@@ -82,6 +82,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     height: 90%;
+    line-height: 1.5;
   }
   
   .taskbar-item {
