@@ -250,7 +250,7 @@ def chart_view(request):
 
    # Create the updated pie chart with daily data
     fig_pie_daily = go.Figure(go.Pie(
-        labels=aggregated_data['Day'].apply(lambda x: f'Day {x}'),  # Custom labels
+        labels=aggregated_data['Day'].dt.strftime('%Y-%m-%d'),  # Use the entire date as labels
         values=aggregated_data['Water Measurements'],
         title='Daily Water Usage',
         textposition='outside',  # Place labels outside the pie chart
