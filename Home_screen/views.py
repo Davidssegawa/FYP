@@ -143,6 +143,66 @@ class TransactionList(generics.ListCreateAPIView):
 #     context = {'chart_html': chart_html}
 #     return render(request, 'sections/Statistics.html',context )
     
+'''from datetime import datetime
+
+def chart_view(request):
+    form = DateRangeForm(request.GET or None)  # Initialize the form instance
+    
+    # Retrieve all Meter_data objects from the database
+    meter_data = Meter_data.objects.all()
+
+    if form.is_valid():
+        start_timestamp = form.cleaned_data.get('start_timestamp')
+        end_timestamp = form.cleaned_data.get('end_timestamp')
+
+        if start_timestamp:
+            meter_data = meter_data.filter(timestamp__gte=start_timestamp)
+        if end_timestamp:
+            meter_data = meter_data.filter(timestamp__lte=end_timestamp)
+
+    meter_data = meter_data.order_by('timestamp')
+    data = {
+        'Timestamp': [data.timestamp for data in meter_data],
+        'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
+    }
+
+    # Create a DataFrame from the data dictionary
+    df = pd.DataFrame(data)
+
+    # Extract month from the timestamp
+    df['Month'] = pd.to_datetime(df['Timestamp']).dt.month
+
+    # Aggregate water measurements data by month
+    aggregated_data = df.groupby('Month')['Water Measurements'].sum().reset_index()
+
+    total_water_consumption = df['Water Measurements'].sum()
+    # Create the line chart
+    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
+
+    # Create the pie chart
+    fig_pie = px.pie(aggregated_data, names='Month', values='Water Measurements', title='Monthly Water Usage')
+
+    # Create the bar graph
+    fig_bar = go.Figure()
+    fig_bar.add_trace(go.Bar(x=aggregated_data['Month'], y=aggregated_data['Water Measurements'], 
+                             marker_color='blue', text=aggregated_data['Water Measurements'],
+                             textposition='auto', name='Monthly Water Usage'))
+
+    # Convert all plots to HTML
+    chart_html_line = fig_line.to_html(full_html=False)
+    chart_html_pie = fig_pie.to_html(full_html=False)
+    chart_html_bar = fig_bar.to_html(full_html=False)
+
+    context = {
+        'chart_html_line': chart_html_line,
+        'chart_html_pie': chart_html_pie,
+        'chart_html_bar': chart_html_bar,  # New chart
+        'total_water_consumption': total_water_consumption,
+        'form': form
+    }
+    return render(request, 'sections/Statistics.html', context)'''
+
+from django.db.models import Sum
 from django.utils import timezone
 from datetime import timedelta
 
@@ -176,7 +236,7 @@ def chart_view(request):
     aggregated_data = []
     for interval in intervals:
         start_interval, end_interval = interval
-        water_measurements_sum = meter_data.filter(timestamp__gte=start_interval, timestamp__lt=end_interval).aggregate(sum('water_measurements'))['water_measurements__sum']
+        water_measurements_sum = meter_data.filter(timestamp__gte=start_interval, timestamp__lt=end_interval).aggregate(total=Sum('water_measurements'))['total']
         aggregated_data.append({'Interval': start_interval.strftime('%Y-%m-%d'), 'Water Measurements': water_measurements_sum or 0})
 
     # Convert aggregated data to DataFrame
@@ -198,3 +258,4 @@ def chart_view(request):
         'form': form
     }
     return render(request, 'sections/Statistics.html', context)
+
