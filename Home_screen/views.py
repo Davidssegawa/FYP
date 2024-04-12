@@ -142,8 +142,13 @@ class TransactionList(generics.ListCreateAPIView):
 #     chart_html = fig.to_html(full_html=False)
 #     context = {'chart_html': chart_html}
 #     return render(request, 'sections/Statistics.html',context )
-    
-from datetime import datetime
+
+
+
+
+
+
+'''from datetime import datetime
 
 def chart_view(request):
     form = DateRangeForm(request.GET or None)  # Initialize the form instance
@@ -199,5 +204,69 @@ def chart_view(request):
         'chart_html_bar': chart_html_bar,  # New chart
         'total_water_consumption': total_water_consumption,
         'form': form
+    }
+    return render(request, 'sections/Statistics.html', context)'''
+
+
+from datetime import datetime
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
+def chart_view(request):
+    form = DateRangeForm(request.GET or None)  # Initialize the form instance
+    
+    # Retrieve all Meter_data objects from the database
+    meter_data = Meter_data.objects.all()
+
+    if form.is_valid():
+        start_timestamp = form.cleaned_data.get('start_timestamp')
+        end_timestamp = form.cleaned_data.get('end_timestamp')
+
+        if start_timestamp:
+            meter_data = meter_data.filter(timestamp__gte=start_timestamp)
+        if end_timestamp:
+            meter_data = meter_data.filter(timestamp__lte=end_timestamp)
+
+    meter_data = meter_data.order_by('timestamp')
+    data = {
+        'Timestamp': [data.timestamp for data in meter_data],
+        'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
+    }
+
+    # Create a DataFrame from the data dictionary
+    df = pd.DataFrame(data)
+
+    # Extract week from the timestamp
+    df['Week'] = pd.to_datetime(df['Timestamp']).dt.week
+
+    # Aggregate water measurements data by week
+    aggregated_data = df.groupby('Week')['Water Measurements'].sum().reset_index()
+
+    total_water_consumption = df['Water Measurements'].sum()
+
+    # Create the line chart
+    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
+
+    # Create the updated pie chart with weekly data
+    fig_pie_weekly = px.pie(aggregated_data, names='Week', values='Water Measurements', title='Weekly Water Usage')
+
+    # Create the bar graph
+    fig_bar = go.Figure()
+    fig_bar.add_trace(go.Bar(x=aggregated_data['Week'], y=aggregated_data['Water Measurements'], 
+                             marker_color='blue', text=aggregated_data['Water Measurements'],
+                             textposition='auto', name='Weekly Water Usage'))
+
+    # Convert all plots to HTML
+    chart_html_line = fig_line.to_html(full_html=False)
+    chart_html_pie_weekly = fig_pie_weekly.to_html(full_html=False)
+
+    # ... (other code for rendering templates or returning HTTP responses)
+    context = {
+    'chart_html_line': chart_html_line,
+    'chart_html_pie': chart_html_pie_weekly,
+    # 'chart_html_bar': chart_html_bar,  # New chart
+    'total_water_consumption': total_water_consumption,
+    'form': form
     }
     return render(request, 'sections/Statistics.html', context)
