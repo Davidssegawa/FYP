@@ -143,7 +143,7 @@ class TransactionList(generics.ListCreateAPIView):
 #     context = {'chart_html': chart_html}
 #     return render(request, 'sections/Statistics.html',context )
     
-'''from datetime import datetime
+from datetime import datetime
 
 def chart_view(request):
     form = DateRangeForm(request.GET or None)  # Initialize the form instance
@@ -200,62 +200,4 @@ def chart_view(request):
         'total_water_consumption': total_water_consumption,
         'form': form
     }
-    return render(request, 'sections/Statistics.html', context)'''
-
-from django.db.models import Sum
-from django.utils import timezone
-from datetime import timedelta
-
-def chart_view(request):
-    form = DateRangeForm(request.GET or None)  # Initialize the form instance
-    
-    # Retrieve all Meter_data objects from the database
-    meter_data = Meter_data.objects.all()
-
-    if form.is_valid():
-        start_timestamp = form.cleaned_data.get('start_timestamp')
-        end_timestamp = form.cleaned_data.get('end_timestamp')
-
-        if start_timestamp:
-            meter_data = meter_data.filter(timestamp__gte=start_timestamp)
-        if end_timestamp:
-            meter_data = meter_data.filter(timestamp__lte=end_timestamp)
-
-    meter_data = meter_data.order_by('timestamp')
-    
-    # Calculate the start and end timestamps for each 24-hour interval
-    start_date = min(meter_data.values_list('timestamp', flat=True))
-    end_date = max(meter_data.values_list('timestamp', flat=True))
-    intervals = []
-    current_date = start_date
-    while current_date < end_date:
-        intervals.append((current_date, current_date + timedelta(days=1)))
-        current_date += timedelta(days=1)
-
-    # Aggregate water measurements data for each 24-hour interval
-    aggregated_data = []
-    for interval in intervals:
-        start_interval, end_interval = interval
-        water_measurements_sum = meter_data.filter(timestamp__gte=start_interval, timestamp__lt=end_interval).aggregate(total=Sum('text'))['total']
-        aggregated_data.append({'Interval': start_interval.strftime('%Y-%m-%d'), 'text': water_measurements_sum or 0})
-
-    # Convert aggregated data to DataFrame
-    df = pd.DataFrame(aggregated_data)
-
-    # Create the line chart
-    fig_line = px.line(df, x='Interval', y='Water Measurements', title="Real-time water usage")
-
-    # Create the pie chart
-    fig_pie = px.pie(df, names='Interval', values='Water Measurements', title='Daily Water Usage')
-
-    # Convert plots to HTML
-    chart_html_line = fig_line.to_html(full_html=False)
-    chart_html_pie = fig_pie.to_html(full_html=False)
-
-    context = {
-        'chart_html_line': chart_html_line,
-        'chart_html_pie': chart_html_pie,
-        'form': form
-    }
     return render(request, 'sections/Statistics.html', context)
-
