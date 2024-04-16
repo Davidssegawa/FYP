@@ -142,13 +142,13 @@ def transaction_handler(request):
             # Extract relevant information from the data
             selected_option = data.get('selected_option')
             confirmation_code = data.get('confirmation_code')
-            
+            transaction = Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
             # Perform any necessary processing or validation
             # For example, save the data to the database
             # transaction = Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
             
             # Send back a success response
-            return JsonResponse({'message': 'Transaction data received successfully'})
+            return JsonResponse({'message': 'Transaction data received successfully'},status=201)
         except json.JSONDecodeError:
             # If JSON decoding fails, return an error response
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
