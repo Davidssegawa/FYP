@@ -16,5 +16,5 @@ urlpatterns =[
     path('webhook/ttn/', views.ttn_webhook),
     path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
     path('api/prepayment-options/',PrepaymentOptionList.as_view(), name='prepayment-option-list'),
-    path('api/transactions/',TransactionList.as_view(), name='transaction-list')
+    path('api/transactions/',views.transaction_handler, name='transaction-list')
 ]

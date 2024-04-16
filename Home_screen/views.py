@@ -122,9 +122,40 @@ class PrepaymentOptionList(generics.ListCreateAPIView):
     queryset = PrepaymentOption.objects.all()
     serializer_class = PrepaymentOptionSerializer
 
-class TransactionList(generics.ListCreateAPIView):
-    queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer
+# class TransactionList(generics.ListCreateAPIView):
+#     queryset = Transaction.objects.all()
+#     serializer_class = TransactionSerializer
+
+# views.py
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt  # Disable CSRF protection for this view
+def transaction_handler(request):
+    if request.method == 'POST':
+        try:
+            # Decode the incoming JSON data
+            data = json.loads(request.body)
+            
+            # Extract relevant information from the data
+            selected_option = data.get('selected_option')
+            confirmation_code = data.get('confirmation_code')
+            
+            # Perform any necessary processing or validation
+            # For example, save the data to the database
+            # transaction = Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
+            
+            # Send back a success response
+            return JsonResponse({'message': 'Transaction data received successfully'})
+        except json.JSONDecodeError:
+            # If JSON decoding fails, return an error response
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    else:
+        # If the request method is not POST, return an error response
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
 # def chart_view(request):
 #     # Retrieve all Meter_data objects from the database
 #     meter_data = Meter_data.objects.all()
