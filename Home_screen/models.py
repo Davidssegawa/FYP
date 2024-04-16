@@ -32,7 +32,7 @@ class PrepaymentOption(models.Model):
         return self.name
 
 class Transaction(models.Model):
-    option = models.ForeignKey(PrepaymentOption, on_delete=models.CASCADE)
+    selected_option = models.ForeignKey(PrepaymentOption, on_delete=models.CASCADE)
     transaction_date = models.DateTimeField(auto_now_add=True)
     confirmation_code = models.CharField(max_length=20)
 
