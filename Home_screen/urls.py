@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import AddressView
-from .views import MeterDataList,PrepaymentOptionList, TransactionList
+from .views import MeterDataList,PrepaymentOptionList
 
 urlpatterns =[
     path('',views.index,name='index'),
