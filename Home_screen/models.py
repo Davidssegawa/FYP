@@ -38,3 +38,15 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"Transaction {self.id}: {self.option.name}"
+
+# water_purchase/models.py
+
+from django.db import models
+
+class WaterPurchaseTransaction(models.Model):
+    liters_purchased = models.IntegerField()
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.liters_purchased} liters - {self.timestamp}"

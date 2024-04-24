@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Meter_data,PrepaymentOption,Transaction
+from .models import WaterPurchaseTransaction
 
 class MeterDataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,4 +22,9 @@ class PrepaymentOptionSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
+        fields = '__all__'
+
+class WaterPurchaseTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WaterPurchaseTransaction
         fields = '__all__'

@@ -128,116 +128,33 @@ class PrepaymentOptionList(generics.ListCreateAPIView):
 
 # views.py
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# import json
 
-@csrf_exempt  # Disable CSRF protection for this view
-def transaction_handler(request):
-    if request.method == 'POST':
-        try:
-            # Decode the incoming JSON data
-            data = json.loads(request.body)
+# @csrf_exempt  # Disable CSRF protection for this view
+# def transaction_handler(request):
+#     if request.method == 'POST':
+#         try:
+#             # Decode the incoming JSON data
+#             data = json.loads(request.body)
             
-            # Extract relevant information from the data
-            selected_option = data.get('selected_option')
-            confirmation_code = data.get('confirmation_code')
-            Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
-            # Perform any necessary processing or validation
-            # For example, save the data to the database
-            # transaction = Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
+#             # Extract relevant information from the data
+#             selected_option = data.get('selected_option')
+#             confirmation_code = data.get('confirmation_code')
+#             Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
+#             # Perform any necessary processing or validation
+#             # For example, save the data to the database
+#             # transaction = Transaction.objects.create(selected_option=selected_option, confirmation_code=confirmation_code)
             
-            # Send back a success response
-            return JsonResponse({'message': 'created'},status=201)
-        except json.JSONDecodeError:
-            # If JSON decoding fails, return an error response
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    else:
-        # If the request method is not POST, return an error response
-        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
-
-# def chart_view(request):
-#     # Retrieve all Meter_data objects from the database
-#     meter_data = Meter_data.objects.all()
-        
-#     # Prepare data for the line chart
-
-#     fig = px.line(
-#         x=[data.timestamp for data in meter_data],
-#         y=[data.text for data in meter_data],
-#         title= "Real-time water usage",
-#         labels = {'x': 'Timestamp','y':'Water measurements'}
-
-#     )
-        
-#     chart_html = fig.to_html(full_html=False)
-#     context = {'chart_html': chart_html}
-#     return render(request, 'sections/Statistics.html',context )
-
-
-
-
-
-
-'''from datetime import datetime
-
-def chart_view(request):
-    form = DateRangeForm(request.GET or None)  # Initialize the form instance
-    
-    # Retrieve all Meter_data objects from the database
-    meter_data = Meter_data.objects.all()
-
-    if form.is_valid():
-        start_timestamp = form.cleaned_data.get('start_timestamp')
-        end_timestamp = form.cleaned_data.get('end_timestamp')
-
-        if start_timestamp:
-            meter_data = meter_data.filter(timestamp__gte=start_timestamp)
-        if end_timestamp:
-            meter_data = meter_data.filter(timestamp__lte=end_timestamp)
-
-    meter_data = meter_data.order_by('timestamp')
-    data = {
-        'Timestamp': [data.timestamp for data in meter_data],
-        'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
-    }
-
-    # Create a DataFrame from the data dictionary
-    df = pd.DataFrame(data)
-
-    # Extract month from the timestamp
-    df['Month'] = pd.to_datetime(df['Timestamp']).dt.month
-
-    # Aggregate water measurements data by month
-    aggregated_data = df.groupby('Month')['Water Measurements'].sum().reset_index()
-
-    total_water_consumption = df['Water Measurements'].sum()
-    # Create the line chart
-    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
-
-    # Create the pie chart
-    fig_pie = px.pie(aggregated_data, names='Month', values='Water Measurements', title='Monthly Water Usage')
-
-    # Create the bar graph
-    fig_bar = go.Figure()
-    fig_bar.add_trace(go.Bar(x=aggregated_data['Month'], y=aggregated_data['Water Measurements'], 
-                             marker_color='blue', text=aggregated_data['Water Measurements'],
-                             textposition='auto', name='Monthly Water Usage'))
-
-    # Convert all plots to HTML
-    chart_html_line = fig_line.to_html(full_html=False)
-    chart_html_pie = fig_pie.to_html(full_html=False)
-    chart_html_bar = fig_bar.to_html(full_html=False)
-
-    context = {
-        'chart_html_line': chart_html_line,
-        'chart_html_pie': chart_html_pie,
-        'chart_html_bar': chart_html_bar,  # New chart
-        'total_water_consumption': total_water_consumption,
-        'form': form
-    }
-    return render(request, 'sections/Statistics.html', context)'''
-
+#             # Send back a success response
+#             return JsonResponse({'message': 'created'},status=201)
+#         except json.JSONDecodeError:
+#             # If JSON decoding fails, return an error response
+#             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+#     else:
+#         # If the request method is not POST, return an error response
+#         return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
 
 from datetime import datetime
 import pandas as pd
@@ -306,3 +223,14 @@ def chart_view(request):
     'form': form
     }
     return render(request, 'sections/Statistics.html', context)
+
+
+# views.py
+
+from rest_framework import viewsets
+from .models import WaterPurchaseTransaction
+from .serializers import WaterPurchaseTransactionSerializer
+
+class WaterPurchaseTransactionViewSet(viewsets.ModelViewSet):
+    queryset = WaterPurchaseTransaction.objects.all()
+    serializer_class = WaterPurchaseTransactionSerializer
