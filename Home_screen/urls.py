@@ -1,7 +1,7 @@
 from django.urls import path,include
 from . import views
 from .views import AddressView
-from .views import MeterDataList,PrepaymentOptionList
+from .views import MeterDataList
 from rest_framework.routers import DefaultRouter
 from .views import WaterPurchaseTransactionViewSet
 
@@ -19,7 +19,7 @@ urlpatterns =[
     path('home/registermeter/',views.registerMeter,name='registermeter'),
     path('webhook/ttn/', views.ttn_webhook),
     path('api/meter-data/',MeterDataList.as_view(), name='meter-data-list'),
-    path('api/prepayment-options/',PrepaymentOptionList.as_view(), name='prepayment-option-list'),
+    # path('api/prepayment-options/',PrepaymentOptionList.as_view(), name='prepayment-option-list'),
     # path('api/transactions/',views.transaction_handler, name='transaction-list')
     path('api/water-purchase/', include(router.urls))
 ]   

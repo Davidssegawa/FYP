@@ -21,8 +21,8 @@ import json
 from django.utils import timezone
 import plotly.express as px
 from .forms import DateRangeForm
-from .models import PrepaymentOption, Transaction
-from .serializers import PrepaymentOptionSerializer,TransactionSerializer
+# from .models import PrepaymentOption, Transaction
+# from .serializers import PrepaymentOptionSerializer,TransactionSerializer
 import plotly.graph_objs as go
 #from plotly.graph_objs import scatter
 
@@ -118,9 +118,9 @@ class MeterDataList(APIView):
 #         serializer = WaterUnitSerializer(water_units, many=True)
 #         return Response(serializer.data)   
 
-class PrepaymentOptionList(generics.ListCreateAPIView):
-    queryset = PrepaymentOption.objects.all()
-    serializer_class = PrepaymentOptionSerializer
+# class PrepaymentOptionList(generics.ListCreateAPIView):
+#     queryset = PrepaymentOption.objects.all()
+#     serializer_class = PrepaymentOptionSerializer
 
 # class TransactionList(generics.ListCreateAPIView):
 #     queryset = Transaction.objects.all()
