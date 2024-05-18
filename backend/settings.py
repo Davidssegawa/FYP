@@ -100,7 +100,7 @@ DATABASES = {
      },
     #  'default': dj_database_url.config(
     #         # Replace this value with your local database's connection string.
-    #             default='postgres://ssegawa_david_joel_1l7u_user:HIMSf8o7HHdcX7ikUMIwucnkBTSGCg8x@dpg-cp49q1gcmk4c73egju70-a.oregon-postgres.render.com/ssegawa_david_joel_1l7u',
+    #             default='postgres://sdj:LgZLMGTLKHQXSULa9AnW7gZxfJRtopxR@dpg-cp4bag8cmk4c73ehdbtg-a.oregon-postgres.render.com/fyp_owy8',
     #             conn_max_age=600
     #         )
  }
