@@ -93,10 +93,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # }
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-     }
+    #  'default': {
+    #      'ENGINE': 'django.db.backends.sqlite3',
+    #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+         
+    #  },
+     'default': dj_database_url.config(
+            # Replace this value with your local database's connection string.
+                default='postgres://ssegawa_david_joel_user:Tijr1UkKNtuETieJmbWmpsrd5me40bQ4@dpg-cnm38onsc6pc739l3k80-a.oregon-postgres.render.com/ssegawa_david_joel',
+                conn_max_age=600
+            )
  }
 
 if RENDER_EXTERNAL_HOSTNAME:
