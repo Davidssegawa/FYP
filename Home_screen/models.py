@@ -3,8 +3,9 @@ from django.db import models
 from django.contrib.auth.models import User
 # map_box_access_token = 'pk.eyJ1Ijoic3NlZ2F3YWpvZTgiLCJhIjoiY2xzNjB5YWhsMXJocjJqcGNjazNuenM1dyJ9.oWRkBvrevz2HGD3oWLFdWw'
 # Create your models here.
+
 class Meter_Address(models.Model):
-    user_id = models.ForeignKey(User, blank=True, default=None, null=True, on_delete=models.SET_NULL)
+    user_id = models.ForeignKey(User, blank=True, default=None, null=True, on_delete=models.CASCADE)
     address = models.TextField()
     lat = models.FloatField(blank=True,null=True)
     long = models.FloatField(blank=True,null=True)
