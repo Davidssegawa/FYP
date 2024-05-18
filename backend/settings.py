@@ -93,22 +93,22 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # }
 
 DATABASES = {
-    #  'default': {
-    #      'ENGINE': 'django.db.backends.sqlite3',
-    #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
          
-    #  },
-     'default': dj_database_url.config(
-            # Replace this value with your local database's connection string.
-                default='postgres://ssegawa_david_joel_1l7u_user:HIMSf8o7HHdcX7ikUMIwucnkBTSGCg8x@dpg-cp49q1gcmk4c73egju70-a.oregon-postgres.render.com/ssegawa_david_joel_1l7u',
-                conn_max_age=600
-            )
+     },
+    #  'default': dj_database_url.config(
+    #         # Replace this value with your local database's connection string.
+    #             default='postgres://ssegawa_david_joel_1l7u_user:HIMSf8o7HHdcX7ikUMIwucnkBTSGCg8x@dpg-cp49q1gcmk4c73egju70-a.oregon-postgres.render.com/ssegawa_david_joel_1l7u',
+    #             conn_max_age=600
+    #         )
  }
 
 if RENDER_EXTERNAL_HOSTNAME:
     DATABASES['default'] = dj_database_url.config(
             # Replace this value with your local database's connection string.
-                default='postgres://ssegawa_david_joel_1l7u_user:HIMSf8o7HHdcX7ikUMIwucnkBTSGCg8x@dpg-cp49q1gcmk4c73egju70-a/ssegawa_david_joel_1l7u',
+                default='postgres://sdj:LgZLMGTLKHQXSULa9AnW7gZxfJRtopxR@dpg-cp4bag8cmk4c73ehdbtg-a/fyp_owy8',
                 conn_max_age=600
             )
 
