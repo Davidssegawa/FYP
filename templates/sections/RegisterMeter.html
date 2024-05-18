@@ -4,8 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RegisterMeter template</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block metatags %}
+    {% endblock %}
 </head>
 <body>
-    
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible show" role = "alert">
+        <strong>Message</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <section class="vh-100">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+                <form action='/home/registermeter/' method="post">
+                    {% csrf_token %}
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <input type="text" id="username" name="username" class="form-control form-control-lg" />
+                    <label class="form-label" for="username">Your Name</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                    <label class="form-label" for="email">Your Email</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                    <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                    <label class="form-label" for="password">Password</label>
+                    </div>
+
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <h3>Location of meter</h3>
+                        <div class="d-flex">
+                            <div data-mdb-input-init class="form-outline m-2">
+                                <input type="text" id="latitude" name="latitude" class="form-control form-control-lg" />
+                                <label class="form-label" for="latitude">Latitude</label>
+                            </div>  
+                            <div data-mdb-input-init class="form-outline m-2">
+                                <input type="text" id="longitude" name="longitude" class="form-control form-control-lg" />
+                                <label class="form-label" for="longitude">Longitude</label>
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                    <button  type="submit" data-mdb-button-init
+                        data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                    </div>
+                    <div class="d-flex justify-content-center my-2">
+                        <a href="/home/">
+                            <button  type="button" data-mdb-button-init
+                            data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Back</button>
+                        </a>
+                    </div>
+                </form>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
 </body>
 </html>

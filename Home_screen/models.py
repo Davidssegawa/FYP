@@ -1,51 +1,31 @@
-import geocoder
+# import geocoder
 from django.db import models
-
-map_box_access_token = 'pk.eyJ1Ijoic3NlZ2F3YWpvZTgiLCJhIjoiY2xzNjB5YWhsMXJocjJqcGNjazNuenM1dyJ9.oWRkBvrevz2HGD3oWLFdWw'
+from django.contrib.auth.models import User
+# map_box_access_token = 'pk.eyJ1Ijoic3NlZ2F3YWpvZTgiLCJhIjoiY2xzNjB5YWhsMXJocjJqcGNjazNuenM1dyJ9.oWRkBvrevz2HGD3oWLFdWw'
 # Create your models here.
 class Meter_Address(models.Model):
+    user_id = models.ForeignKey(User, blank=True, default=None, null=True, on_delete=models.SET_NULL)
     address = models.TextField()
     lat = models.FloatField(blank=True,null=True)
     long = models.FloatField(blank=True,null=True)
 
-    def save(self,*args,**kwargs):
-        g = geocoder.mapbox(self.address, key=map_box_access_token)
-        g = g.latlng
-        self.lat = g[0]
-        self.long = g[1]
-        return super(Meter_Address, self).save(*args,**kwargs)
-
 
 class Meter_data(models.Model):
+    meter_id = models.ForeignKey(Meter_Address, on_delete=models.SET_NULL, default=None, blank=True, null=True)
     timestamp = models.DateTimeField()     
-    text = models.FloatField()
-
+    flowRate = models.FloatField( default=0)
+    totalMilli = models.FloatField(default=0)
+    totalLiters = models.FloatField(default=0)
+    totalLitersLeft = models.FloatField(default=0)
 
     def __str__(self):
         return f"Timestamp: {self.timestamp}, Text: {self.text}"
 
-# class PrepaymentOption(models.Model):
-#     name = models.CharField(max_length=100)
-#     price = models.DecimalField(max_digits=10, decimal_places=2)
-
-#     def __str__(self):
-#         return self.name
-
-# class Transaction(models.Model):
-#     selected_option = models.ForeignKey(PrepaymentOption, on_delete=models.CASCADE)
-#     transaction_date = models.DateTimeField(auto_now_add=True)
-#     confirmation_code = models.CharField(max_length=20)
-
-#     def __str__(self):
-#         return f"Transaction {self.id}: {self.option.name}"
-
-# water_purchase/models.py
-
-from django.db import models
-
 class WaterPurchaseTransaction(models.Model):
-    liters_purchased = models.IntegerField()
-    amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
+    user_id = models.ForeignKey(User, default=None, null=True, on_delete=models.SET_NULL)
+    meter_id = models.ForeignKey(Meter_Address, default=None, null=True, on_delete=models.SET_NULL)
+    liters_purchased = models.FloatField(default=0)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

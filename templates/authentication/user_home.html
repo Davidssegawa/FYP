@@ -1,0 +1,41 @@
+{% extends "authentication/base.html" %}
+{% block metatags %}
+<style>
+    .main-svg{
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class='container-fluid'>
+
+    <div class='row justify-content-center my-2'>
+        <div class="col-md-5  " style='height:30em;'>
+            <p>
+                <h2>Current Purchased Water</h2>
+                <h3>{{ total_water_current }} Litres</h3>
+            </p>
+            <p>
+                <h2>Cumulative Water Consumption</h2>
+                <h3>{{ total_water_consumption }} Litres</h3>
+            </p>
+            
+        </div>
+        <div class="col-md-5 mx-2" style='height:30em;'>
+                <!-- Render the line chart -->
+            {{ chart_html_line|safe }}
+        </div>
+        
+    </div>
+    <div class='row justify-content-center my-2'>
+        <div class="col-md-5  mx-2" style='height:30em;'>
+            {{chart_html_bar|safe}}
+            
+        </div>
+        <div class="col-md-5  " style='height:30em;'>
+            {{ chart_html_pie|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

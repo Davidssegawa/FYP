@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'style\signin.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" media="screen" href="{% static 'style\signin.css' %}"> {% endcomment %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
 
@@ -17,30 +20,33 @@
     </div>
     {% endfor %}
 
-<div class= "form-container">
-    <h3>Water Monitoring System login</h3>
-    <div class="form-element">
-        <form action="/signin/" method="POST">
+    <section class="vh-100" style="background-color: #508bfc;">
+        <form action="/" method="POST">
         {% csrf_token %}
-            <div class="sec1">
-                <label for="">Username</label>
-                <input type="text" name="username" id="username" placeholder="Enter Username" Required>
+        <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+                    <h2>Water Monitoring System</h2>
+                    <h3 class="mb-5">Sign in</h3>
+                    
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="email" id="typeEmailX-2" class="form-control form-control-lg" name='email'/>
+                        <label class="form-label" for="typeEmailX-2">Email</label>
+                    </div>
+        
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="password" id="typePasswordX-2" class="form-control form-control-lg" name='password'/>
+                        <label class="form-label" for="typePasswordX-2">Password</label>
+                    </div>
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                    </div>
+                </div>
             </div>
-            
-
-            <div class="sec2">
-                <label for="">Password</label>
-                <input type="password" name="pass1" id="pass1" placeholder="Enter password" Required>
-            </div>
-            
-            <br>
-
-            <div class ="sec3">
-                <button type="submit" class=" justify-content-center">Login</button>
-            </div>
-            
+        </div>
+        </div>
         </form>
-    </div>
-</div>
+    </section>
 </body>
 </html>

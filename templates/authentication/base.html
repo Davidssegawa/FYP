@@ -1,0 +1,46 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" type="text/css" media="screen" href="{% static 'style\home.css' %}"> {% endcomment %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block metatags %}
+    {% endblock %}
+</head>
+
+<body>  
+       
+<!-- Image and text -->
+{% if user.is_staff %}
+<nav class="navbar navbar-light bg-body-tertiary">
+    <div class="container-fluid">
+        
+        <a href='/home/'><button class="btn btn-primary btn-lg btn-block" type="submit">Dashboard</button></a>
+        <a href='/home/registermeter/'><button class="btn btn-primary btn-lg btn-block" type="submit">Register</button></a>
+        <a href='/admin'><button class="btn btn-primary btn-lg btn-block" type="submit">Admin Panel</button></a>
+        <div></div>
+        <div></div>
+        <div></div>
+        <a href='/signout/'><button class="btn btn-lg btn-block" type="submit">Sign Out</button></a>
+    </div>
+</nav>
+{% else %}
+<nav class="navbar navbar-light bg-body-tertiary">
+    <div class="container-fluid">
+        <a href='/home/'><button class="btn btn-primary btn-lg btn-block" type="submit">Dashboard</button></a>
+        <a href='/home/water-purchase/'><button class="btn btn-primary btn-lg btn-block" type="submit">Purchase</button></a>
+        <div></div>
+        <div></div>
+        <div></div>
+        <a href='/signout/'><button class="btn btn-lg btn-block" type="submit">Sign Out</button></a>
+    </div>
+</nav>
+{% endif %}
+{% block content %}
+{%endblock %}
+</body>
+</html>

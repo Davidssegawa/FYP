@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RegisterMeter template</title>
+    <link href="https://cdn.jsdelivr.net/gh/priyashpatil/phone-input-by-country@0.0.1/cpi.css" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .container {
+            position: relative;
+        }
+        
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class='bg-primary'>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible show" role = "alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <section class="vh-100">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Water Purchase</h2>
+
+                <form action='/home/water-purchase/' method="post" id='purchaseform'>
+                    {% csrf_token %}
+                    <fieldset id='form_fields'>
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                            <label class="form-label" for="email">Your Email</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <div class="cpi-input">
+                                <div class="input-group mb-3 border rounded">
+                                    <button class="btn btn-light dropdown-toggle d-flex align-items-center cpi-drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="me-1">UG</span>
+                                    </button>
+                                    <div class="dropdown-menu w-100">
+                                        <button type="button" class="dropdown-item" data-cpi-icon="UG" data-cpi-ext="+256" data-cpi-min-length="10" data-cpi-max-length="10" id="tel_select">
+                                            UG Uganda (+256)
+                                        </button>
+                                    </div>
+                                    <span class="input-group-text bg-white text-muted border-0 cpi-ext-txt">+256</span>
+                                    <input type="text" class="form-control border-0 phone-input flex-shrink-1" style="outline: none;" pattern="[0-9]+" required minlength="10" maxlength="10" title="Enter a valid mobile number" name='phone' id='phone'>
+                                </div>
+                                <input type="hidden" class="country-code-input">
+                            </div>
+                            <label class="form-label" for="phone">Phone Number</label>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <div class="d-flex">
+                                <div data-mdb-input-init class="form-outline m-2">
+                                    <input type="number" id="amount" name="amount" class="form-control form-control-lg" />
+                                    <label class="form-label" for="amount">Amount (UGX)</label>
+                                </div>  
+                                <div data-mdb-input-init class="form-outline m-2">
+                                    <label class="visually-hidden" for="network">Mobile Operator</label>
+                                    <select data-mdb-select-init class="select" name='network' id='network'>
+                                        <option value="mtn">MTN</option>
+                                        <option value="airtel">AIRTEL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                        <button  type="submit" data-mdb-button-init
+                            data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Purchase</button>
+                        </div>
+                        <div class="d-flex justify-content-center my-2">
+                            <a href="/home/">
+                                <button  type="button" data-mdb-button-init
+                                data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Back</button>
+                            </a>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="loading-screen" id="loadingScreen">
+                    <div class="spinner-border text-primary" style="height: 6rem; width: 6rem" role="status">
+                        <span class="visually-hidden">Processing Transaction</span>
+                    </div>
+                    <p>
+                        Processing Transaction
+                    </p>
+                </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/gh/priyashpatil/phone-input-by-country@0.0.1/cpi.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        window.onload = () => {
+            const form = document.getElementById('purchaseform');
+            form.addEventListener('submit', (event) => {
+                console.log(event)
+                form.style.display = 'none'
+                document.getElementById('loadingScreen').style.display = 'flex'
+            })
+        }
+    </script>
+</body>
+</html>

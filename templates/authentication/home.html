@@ -1,36 +1,69 @@
-{% load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'style\home.css' %}">
-</head>
-
-<body>             
-    <!--<div class="heading">
-        <h1 class="page-heading">Welcome to Utility Side Water Management Platform</h1>
-    </div>--> 
-    <div class="taskbar">
-        <div><a href="#" class="taskbar-item">Home</a></div>
-        <div><a href="#" class="taskbar-item">Notifications</a></div>
-        <div><a href="statistics/" class="taskbar-item">Dashboard</a></div>
+{% extends "authentication/base.html" %}
+{% block metatags %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css' rel='stylesheet' />
+<style>
+    .main-svg{
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class='container-fluid'>
+    <div class="row justify-content-center my-4">
+        <div class="col-md-10 bg-secondary rounded rounded-5 border border-1" style='height:30em;' id='map'></div>
     </div>
-    {% if user.is_authenticated%}
-    
-    <button type="submit"><a href='/signout/'>SignOut</a></button>
-
-    {% else %}
-
-    <button type="submit"><a href='/signin/'>SignIn</a></button>
-
-    {% endif %}
-    
-     
-    <div class="container">
-        <div class="item"><a href="statistics/">Statistics</a></div>
-        <div class="item"><a href="map/">Map</a></div>
-        <div class="item"><a href="registermeter/">Records</a></div>
+    <div class='container-fluid'>
+        <div class='row justify-content-center my-2'>
+            <div class="col-md-5  " style='height:30em;'>
+                <p>
+                    <h2>Cumulative Water Consumption</h2>
+                    <h3>{{ total_water_consumption }} Litres</h3>
+                </p>
+                
+            </div>
+            <div class="col-md-5 mx-2" style='height:30em;'>
+                    <!-- Render the line chart -->
+                {{ chart_html_line|safe }}
+            </div>
+            
+        </div>
+        <div class='row justify-content-center my-2'>
+            <div class="col-md-5  mx-2" style='height:30em;'>
+                {{chart_html_bar|safe}}
+                
+            </div>
+            <div class="col-md-5  " style='height:30em;'>
+                {{ chart_html_pie|safe }}
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
+<script>
+    {% comment %} document.getElementById('p').onclick = () => fetch('http://127.0.0.1:8000/') {% endcomment %}
+    mapboxgl.accessToken = '{{mapbox_access_token}}';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        center: [32.58251970, 0.34759640], // starting position [lng, lat]
+        zoom: 12 // starting zoom
+    });
+    const url = window.location.href
+    console.log(url)
+    let addresses = {{ addresses|safe }} 
+    addresses.forEach((address) => {
+        console.log(address)
+        
+        const marker1 = new mapboxgl.Marker({clickTolerance: 5}).setLngLat(address.slice(0,2)).addTo(map)
+        marker1.getElement().addEventListener('click', () => {
+            console.log("Marker clicked")
+            window.location.href = `http://127.0.0.1:8000/home/?meter=${address[2]}`
+        })
+    })
+    
+</script>
+
+
+{% endblock %}
