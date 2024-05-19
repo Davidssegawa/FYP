@@ -66,7 +66,8 @@ def home(request):
                     meter_data = meter_data.order_by('timestamp')[:50]
                     data = {
                         'Timestamp': [data.timestamp for data in meter_data],
-                        'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
+                        'Water Measurements': [data.TotalLiters for data in meter_data]  # Assuming 'value' is the field containing water measurements
+                        # 'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
                     }
 
                     # Create a DataFrame from the data dictionary
@@ -161,7 +162,8 @@ def home(request):
             context['chart_html_bar'] =fig_bar.to_html(full_html=False) # New chart
             context['total_water_consumption'] = total_water_consumption
             total_purchased = sum([val['liters_purchased'] for val in meter.waterpurchasetransaction_set.values('liters_purchased')])
-            total_used = sum([val['text'] for val in meter.meter_data_set.values('text')])
+            # total_used = sum([val['text'] for val in meter.meter_data_set.values('text')])
+            total_used = sum([val['TotalLiters'] for val in meter.meter_data_set.values('TotalLiters')])
             context['total_water_current'] = round(total_purchased - total_used, 3)
             # print(context)
     return render(request, 'authentication/user_home.html', context=context)
