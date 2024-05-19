@@ -20,7 +20,7 @@ class Meter_data(models.Model):
     totalLitersLeft = models.FloatField(default=0)
 
     def __str__(self):
-        return f"Timestamp: {self.timestamp}, Text: {self.text}"
+        return f"Timestamp: {self.timestamp}, Meter: {self.meter_id}, totalLiters: {self.totalLiters}"
 
 class WaterPurchaseTransaction(models.Model):
     user_id = models.ForeignKey(User, default=None, null=True, on_delete=models.SET_NULL)
