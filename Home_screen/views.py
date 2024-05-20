@@ -161,7 +161,7 @@ def home(request):
             context['chart_html_bar'] =fig_bar.to_html(full_html=False) # New chart
             context['total_water_consumption'] = total_water_consumption
             total_purchased = sum([val['liters_purchased'] for val in meter.waterpurchasetransaction_set.values('liters_purchased')])
-            total_used = sum([val['text'] for val in meter.meter_data_set.values('text')])
+            total_used = sum([val['totalLiters'] for val in meter.meter_data_set.values('totalLiters')])
             context['total_water_current'] = round(total_purchased - total_used, 3)
             # print(context)
     return render(request, 'authentication/user_home.html', context=context)
