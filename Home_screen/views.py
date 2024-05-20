@@ -120,7 +120,7 @@ def home(request):
             meter_data = meter_data.order_by('timestamp')[:50]
             data = {
                 'Timestamp': [data.timestamp for data in meter_data],
-                'Water Measurements': [data.text for data in meter_data]  # Assuming 'value' is the field containing water measurements
+                'Water Measurements': [data.totalLiters for data in meter_data]  # Assuming 'value' is the field containing water measurements
             }
 
             # Create a DataFrame from the data dictionary
