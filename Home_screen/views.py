@@ -147,7 +147,7 @@ def home(request):
 
             # Create the bar graph
             fig_bar = go.Figure()
-            fig_bar.add_trace(go.Bar(x=aggregated_data['Day'], y=aggregated_data['Water Measurements'], 
+            fig_bar.add_trace(go.Bar(x=aggregated_data['Date'], y=aggregated_data['Water Measurements'], 
                                     marker_color='blue', text=aggregated_data['Water Measurements'],
                                     textposition='auto', name='Daily Water Usage'))
 
