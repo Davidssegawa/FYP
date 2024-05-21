@@ -73,10 +73,10 @@ def home(request):
                     df = pd.DataFrame(data)
 
                     # Extract day from the timestamp
-                    df['Day'] = pd.to_datetime(df['Timestamp']).dt.day
+                    df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
 
                     # Aggregate water measurements data by day
-                    aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
+                    aggregated_data = df.groupby('Date')['Water Measurements'].sum().reset_index()
 
                     total_water_consumption = df['Water Measurements'].sum()
 
@@ -85,7 +85,7 @@ def home(request):
 
                 # Create the updated pie chart with daily data
                     fig_pie_daily = go.Figure(go.Pie(
-                        labels=aggregated_data['Day'].apply(lambda x: f'Day {x}'),  # Custom labels
+                        labels=aggregated_data['Date'].apply(lambda x: f'Date {x}'),  # Custom labels
                         values=aggregated_data['Water Measurements'],
                         title='Daily Water Usage',
                         textposition='outside',  # Place labels outside the pie chart
@@ -130,7 +130,7 @@ def home(request):
             df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
 
             # Aggregate water measurements data by day
-            aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
+            aggregated_data = df.groupby('Date')['Water Measurements'].sum().reset_index()
 
             total_water_consumption = df['Water Measurements'].sum()
 
@@ -139,7 +139,7 @@ def home(request):
 
         # Create the updated pie chart with daily data
             fig_pie_daily = go.Figure(go.Pie(
-                labels=aggregated_data['Day'].apply(lambda x: f'Day {x}'),  # Custom labels
+                labels=aggregated_data['Date'].apply(lambda x: f'Date {x}'),  # Custom labels
                 values=aggregated_data['Water Measurements'],
                 title='Daily Water Usage',
                 textposition='outside',  # Place labels outside the pie chart
