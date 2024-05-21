@@ -157,21 +157,21 @@ def home(request):
             ))
 
             # Create the bar graph for daily water usage
-                    fig_bar = go.Figure()
-                    fig_bar.add_trace(go.Bar(
-                        x=aggregated_data['Date'].apply(lambda x: x.strftime('%Y-%m-%d')), 
-                        y=aggregated_data['Water Measurements'], 
-                        text=aggregated_data['Date'].apply(lambda x: f'Date {x.strftime("%Y-%m-%d")}'),  # Custom text for each bar
-                        hovertext=aggregated_data['Date'].apply(lambda x: f'Date: {x.strftime("%Y-%m-%d")}<br>Water Usage: {x} liters'),  # Custom hover text
-                        marker_color='blue',
-                        textposition='auto',
-                        name='Daily Water Usage'
-                    ))
-                    fig_bar.update_layout(
-                        title="Daily Water Usage",
-                        xaxis_title="Date",
-                        yaxis_title="Total daily water consumption (Liters)"
-                    )
+            fig_bar = go.Figure()
+            fig_bar.add_trace(go.Bar(
+                x=aggregated_data['Date'].apply(lambda x: x.strftime('%Y-%m-%d')), 
+                y=aggregated_data['Water Measurements'], 
+                text=aggregated_data['Date'].apply(lambda x: f'Date {x.strftime("%Y-%m-%d")}'),  # Custom text for each bar
+                hovertext=aggregated_data['Date'].apply(lambda x: f'Date: {x.strftime("%Y-%m-%d")}<br>Water Usage: {x} liters'),  # Custom hover text
+                marker_color='blue',
+                textposition='auto',
+                name='Daily Water Usage'
+            ))
+            fig_bar.update_layout(
+                title="Daily Water Usage",
+                xaxis_title="Date",
+                yaxis_title="Total daily water consumption (Liters)"
+            )
 
             # Convert all plots to HTML
             chart_html_line = fig_line.to_html(full_html=False)
