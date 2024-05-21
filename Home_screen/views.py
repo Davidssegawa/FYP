@@ -81,7 +81,7 @@ def home(request):
                     total_water_consumption = df['Water Measurements'].sum()
 
                     # Create the line chart
-                    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage")
+                    fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage",labels={'Timestamp': 'Timestamp', 'Water Measurements': 'Daily water usage (Liters)'})
 
                 # Create the updated pie chart with daily data
                     fig_pie_daily = go.Figure(go.Pie(
