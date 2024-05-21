@@ -87,13 +87,13 @@ def home(request):
                     fig_pie_daily = go.Figure(go.Pie(
                         labels=aggregated_data['Date'].apply(lambda x: f'Date {x}'),  # Custom labels
                         values=aggregated_data['Water Measurements'],
-                        title='Daily Water Usage',
+                        title='Daily Water Usage',title_font_size=20,
                         textposition='outside',  # Place labels outside the pie chart
                     ))
 
                     # Create the bar graph
                     fig_bar = go.Figure()
-                    fig_bar.add_trace(go.Bar(x=aggregated_data['Day'], y=aggregated_data['Water Measurements'], 
+                    fig_bar.add_trace(go.Bar(x=aggregated_data['Date'], y=aggregated_data['Water Measurements'], labels=aggregated_data['Date'].apply(lambda x: f'Date {x}'),
                                             marker_color='blue', text=aggregated_data['Water Measurements'],
                                             textposition='auto', name='Daily Water Usage'))
 
