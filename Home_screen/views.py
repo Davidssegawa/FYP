@@ -127,7 +127,7 @@ def home(request):
             df = pd.DataFrame(data)
 
             # Extract day from the timestamp
-            df['Day'] = pd.to_datetime(df['Timestamp']).dt.day
+            df['Date'] = pd.to_datetime(df['Timestamp']).dt.date
 
             # Aggregate water measurements data by day
             aggregated_data = df.groupby('Day')['Water Measurements'].sum().reset_index()
