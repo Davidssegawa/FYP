@@ -5,6 +5,16 @@
         border: 1px solid black;
         border-radius: 5px;
     }
+    .item {
+    width: 200px;
+    height: 100px; /* Adjusted height */
+    margin: 20px; /* Adjusted margin */
+    /* background-color: whitesmoke; */
+    background-color: rgba(30, 186, 247, 0.916);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -12,15 +22,15 @@
 
     <div class='row justify-content-center my-2'>
         <div class="col-md-5  " style='height:30em;'>
-            <p>
+            <p class='item'>
                 <h2>Current Purchased Water</h2>
                 <h3>{{ total_water_current }} Litres</h3>
             </p>
-            <p>
+            <p class='item'>
                 <h2>Cumulative Water Consumption</h2>
                 <h3>{{ total_water_consumption }} Litres</h3>
             </p>
-             <p>
+             <p class='item'>
                 <h2>Estimated monthly water cost</h2>
                 <h3>UGX{{estimated_monthly_cost  }} </h3>
             </p>
