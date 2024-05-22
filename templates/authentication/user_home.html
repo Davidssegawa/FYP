@@ -5,9 +5,17 @@
     .main-svg {
         border: 1px solid black;
         border-radius: 5px;
+        padding: 15px;
     }
     .full-height {
         height: 30em;
+    }
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-text {
+        font-size: 1.25rem;
     }
 </style>
 {% endblock %}
@@ -16,7 +24,7 @@
 <div class="container">
     <div class="row justify-content-center my-2">
         <!-- First Column: Water Information -->
-        <div class="col-md-5 full-height">
+        <div class="col-md-5">
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">Current Purchased Water</h2>
@@ -29,18 +37,17 @@
                     <h3 class="card-text">{{ total_water_consumption }} Litres</h3>
                 </div>
             </div>
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">Estimated Monthly Water Cost</h2>
                     <h3 class="card-text">UGX {{ estimated_monthly_cost }}</h3>
                 </div>
             </div>
         </div>
-        <!-- Second Column: Chart -->
-        <div class="col-md-5 mx-2 full-height">
-            <div class="card h-100">
-                <div class="card-body">
-                    <!-- Render the line chart -->
+        <!-- Second Column: Line Chart -->
+        <div class="col-md-5 mx-2">
+            <div class="card full-height">
+                <div class="card-body main-svg">
                     {{ chart_html_line|safe }}
                 </div>
             </div>
@@ -48,17 +55,17 @@
     </div>
     <div class="row justify-content-center my-2">
         <!-- Bar Chart Column -->
-        <div class="col-md-5 mx-2 full-height">
-            <div class="card h-100">
-                <div class="card-body">
+        <div class="col-md-5 mx-2">
+            <div class="card full-height">
+                <div class="card-body main-svg">
                     {{ chart_html_bar|safe }}
                 </div>
             </div>
         </div>
         <!-- Pie Chart Column -->
-        <div class="col-md-5 full-height">
-            <div class="card h-100">
-                <div class="card-body">
+        <div class="col-md-5">
+            <div class="card full-height">
+                <div class="card-body main-svg">
                     {{ chart_html_pie|safe }}
                 </div>
             </div>
