@@ -116,7 +116,7 @@ def home(request):
                     context['chart_html_line'] = chart_html_line
                     context['chart_html_pie'] = chart_html_pie_daily
                     context['chart_html_bar'] =fig_bar.to_html(full_html=False) # New chart
-                    context['total_water_consumption'] = total_water_consumption
+                    context['total_water_consumption'] = round(total_water_consumption,3)
                         # 'form': form
             return render(request, 'authentication/home.html', context=context)
     user = User.objects.get(pk=request.user.id)
@@ -181,7 +181,7 @@ def home(request):
             context['chart_html_line'] = chart_html_line
             context['chart_html_pie'] = chart_html_pie_daily
             context['chart_html_bar'] =fig_bar.to_html(full_html=False) # New chart
-            context['total_water_consumption'] = total_water_consumption
+            context['total_water_consumption'] = round(total_water_consumption,3)
             total_purchased = sum([val['liters_purchased'] for val in meter.waterpurchasetransaction_set.values('liters_purchased')])
             total_used = sum([val['totalLiters'] for val in meter.meter_data_set.values('totalLiters')])
             context['total_water_current'] = round(total_purchased - total_used, 3)
