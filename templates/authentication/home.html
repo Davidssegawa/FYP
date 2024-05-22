@@ -7,6 +7,20 @@
         border: 1px solid black;
         border-radius: 5px;
     }
+    .item {
+    padding: 20px;
+    margin: 20px 0; /* Adjusted margin */
+    background-color: rgba(30, 186, 247, 0.916);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    }
+    .item:hover {
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+    .full-height {
+        height: 30em;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -17,23 +31,23 @@
     <div class='container-fluid'>
         <div class='row justify-content-center my-2'>
             <div class="col-md-5  " style='height:30em;'>
-                <p>
+                <div class="item">
                     <h2>Cumulative Water Consumption</h2>
                     <h3>{{ total_water_consumption }} Litres</h3>
-                </p>
-                <p>
+                </div>
+                <div class="item">
                     <h2>Total Number of meters on the Network</h2>
                     <h3>{{Number_of_meters_connected }}</h3>
-                </p>
-                <p>
+                </div>
+                <div class="item">
                     <h2>Meters active</h2>
                     <h3>{{Meters_on }}</h3>
-                </p>
+                </div>
    
-                <p>
+                <div class="item">
                     <h2>Meters Inactive</h2>
                     <h3>{{Meters_off }}</h3>
-                </p>
+                </div>
 
                 
             </div>
