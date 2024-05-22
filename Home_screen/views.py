@@ -144,7 +144,7 @@ def home(request):
             aggregated_data = df.groupby('Date')['Water Measurements'].sum().reset_index()
 
             total_water_consumption = df['Water Measurements'].sum()
-            averaged_value = df['total_water_consumption'].average()
+            averaged_value = average(total_water_consumption)
             estimated_cost_monthly = (averaged_value*4224)/1000
             # Create the line chart
             fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage",labels={'Timestamp': 'Timestamp', 'Water Measurements': 'Real-time daily water usage(Liters)'})
