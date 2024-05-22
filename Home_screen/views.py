@@ -81,6 +81,8 @@ def home(request):
                     total_water_consumption = df['Water Measurements'].sum()
                     Number_of_meters_connected = df['meter_id'].sum()
                     Meters_on = df['meter_id'].sum()
+                    Meters_off = Number_of_meters_connected - Meters_on
+                    
                     # Create the line chart
                     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage",labels={'Timestamp': 'Timestamp', 'Water Measurements': 'Daily water usage (Liters)'})
 
@@ -120,6 +122,7 @@ def home(request):
                     context['total_water_consumption'] = round(total_water_consumption,3)
                     context['Number_of_meters_connected'] = Number_of_meters_connected
                     context['Meters_on'] = Meters_on
+                    context['Meters_off'] = Meters_off
                         # 'form': form
             return render(request, 'authentication/home.html', context=context)
     user = User.objects.get(pk=request.user.id)
