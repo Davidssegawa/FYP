@@ -79,7 +79,8 @@ def home(request):
                     aggregated_data = df.groupby('Date')['Water Measurements'].sum().reset_index()
 
                     total_water_consumption = df['Water Measurements'].sum()
-
+                    Number_of_meters_connected = df['meter_id'].sum()
+                    Meters_on = df['meter_id'].sum()
                     # Create the line chart
                     fig_line = px.line(df, x='Timestamp', y='Water Measurements', title="Real-time water usage",labels={'Timestamp': 'Timestamp', 'Water Measurements': 'Daily water usage (Liters)'})
 
@@ -117,6 +118,8 @@ def home(request):
                     context['chart_html_pie'] = chart_html_pie_daily
                     context['chart_html_bar'] =fig_bar.to_html(full_html=False) # New chart
                     context['total_water_consumption'] = round(total_water_consumption,3)
+                    context['Number_of_meters_connected'] = Number_of_meters_connected
+                    context['Meters_on'] = Meters_on
                         # 'form': form
             return render(request, 'authentication/home.html', context=context)
     user = User.objects.get(pk=request.user.id)
