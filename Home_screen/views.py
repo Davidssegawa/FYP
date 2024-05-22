@@ -79,8 +79,8 @@ def home(request):
                     aggregated_data = df.groupby('Date')['Water Measurements'].sum().reset_index()
 
                     total_water_consumption = df['Water Measurements'].sum()
-                    Number_of_meters_connected = df['meter_id'].sum()
-                    Meters_on = df['meter_id'].sum()
+                    Number_of_meters_connected =  Meter_Address.objects.values('user_id').distinct().count()
+                    Meters_on =  Meter_Address.objects.values('user_id').distinct().count()
                     Meters_off = Number_of_meters_connected - Meters_on
                     
                     # Create the line chart
