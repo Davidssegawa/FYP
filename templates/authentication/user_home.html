@@ -6,17 +6,6 @@
         border: 1px solid black;
         border-radius: 5px;
     }
-    .item {
-        padding: 20px;
-        margin: 20px 0; /* Adjusted margin */
-        background-color: rgba(30, 186, 247, 0.916);
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
-    }
-    .item:hover {
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    }
     .full-height {
         height: 30em;
     }
@@ -28,37 +17,50 @@
     <div class="row justify-content-center my-2">
         <!-- First Column: Water Information -->
         <div class="col-md-5 full-height">
-            <div class="item">
-                <h2>Current Purchased Water</h2>
-                <h3>{{ total_water_current }} Litres</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Current Purchased Water</h2>
+                    <h3 class="card-text">{{ total_water_current }} Litres</h3>
+                </div>
             </div>
-            <div class="item">
-                <h2>Cumulative Water Consumption</h2>
-                <h3>{{ total_water_consumption }} Litres</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Cumulative Water Consumption</h2>
+                    <h3 class="card-text">{{ total_water_consumption }} Litres</h3>
+                </div>
             </div>
-            <div class="item">
-                <h2>Estimated Monthly Water Cost</h2>
-                <h3>UGX {{ estimated_monthly_cost }}</h3>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Estimated Monthly Water Cost</h2>
+                    <h3 class="card-text">UGX {{ estimated_monthly_cost }}</h3>
+                </div>
             </div>
         </div>
         <!-- Second Column: Chart -->
         <div class="col-md-5 mx-2 full-height">
-            <div class="main-svg">
-                {{ chart_html_line|safe }}
+            <div class="card h-100">
+                <div class="card-body">
+                    <!-- Render the line chart -->
+                    {{ chart_html_line|safe }}
+                </div>
             </div>
         </div>
     </div>
     <div class="row justify-content-center my-2">
         <!-- Bar Chart Column -->
         <div class="col-md-5 mx-2 full-height">
-            <div class="main-svg">
-                {{ chart_html_bar|safe }}
+            <div class="card h-100">
+                <div class="card-body">
+                    {{ chart_html_bar|safe }}
+                </div>
             </div>
         </div>
         <!-- Pie Chart Column -->
         <div class="col-md-5 full-height">
-            <div class="main-svg">
-                {{ chart_html_pie|safe }}
+            <div class="card h-100">
+                <div class="card-body">
+                    {{ chart_html_pie|safe }}
+                </div>
             </div>
         </div>
     </div>
