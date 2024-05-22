@@ -186,7 +186,7 @@ def home(request):
             total_purchased = sum([val['liters_purchased'] for val in meter.waterpurchasetransaction_set.values('liters_purchased')])
             total_used = sum([val['totalLiters'] for val in meter.meter_data_set.values('totalLiters')])
             context['total_water_current'] = round(total_purchased - total_used, 3)
-            context['Estimated_monthly_cost'] = round(estimated_cost_monthly)
+            context['estimated_monthly_cost'] = round(estimated_cost_monthly)
             # print(context)
     return render(request, 'authentication/user_home.html', context=context)
 
